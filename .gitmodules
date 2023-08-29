@@ -1,0 +1,9 @@
+[submodule "apeiron-core/deps/glfw"]
+	path = apeiron-core/deps/glfw
+	url = git@github.com:glfw/glfw.git
+[submodule "apeiron-core/deps/glm"]
+	path = apeiron-core/deps/glm
+	url = git@github.com:g-truc/glm.git
+[submodule "apeiron-core/deps/sdl2"]
+	path = apeiron-core/deps/sdl2
+	url = git@github.com:libsdl-org/SDL.git
