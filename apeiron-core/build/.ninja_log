@@ -1,0 +1,8 @@
+# ninja log v5
+82	372	1693316256690561200	tests/bin/test0exec	e4c2919f82853e60
+5	33	1693314300454081600	CMakeFiles/apeiron-core.dir/src/test.cpp.o	ad798e80349128
+6	81	1693316256399378000	/media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a	c8ff64dbb3c7ebc7
+217	270	1693314763679252000	lib/libapeiron-core.a	b73ec3047d0d329d
+5	334	1693314300755854000	tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o	f79131d834b4db18
+5	216	1693314763626573300	CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o	aa0f643abcead5c9
+4	80	1693318640834424000	build.ninja	fa8f30f5328572f4

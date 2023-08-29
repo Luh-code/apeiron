@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/media/para/Projects/apeiron/apeiron-core/build",
+  "command": "/usr/bin/c++ -o CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp",
+  "output": "CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o"
+},
+{
+  "directory": "/media/para/Projects/apeiron/apeiron-core/build",
+  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -o tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o -c /media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp",
+  "output": "tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o"
+}
+]
