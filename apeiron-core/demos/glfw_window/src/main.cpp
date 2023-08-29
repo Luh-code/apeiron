@@ -3,7 +3,7 @@
 
 int main() {
   // std::cout << apeiron_core::window::test() << std::endl;
-  // apeiron_core::window::test();
+  apeiron_core::window::glfw_test();
 
   return 0;
 }

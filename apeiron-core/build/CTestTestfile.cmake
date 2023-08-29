@@ -7,4 +7,5 @@
 subdirs("deps/sdl2")
 subdirs("deps/glfw")
 subdirs("deps/glm")
+subdirs("demos")
 subdirs("tests")

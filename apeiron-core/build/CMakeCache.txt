@@ -306,6 +306,9 @@ DART_TESTING_TIMEOUT:STRING=1500
 //Path to a library.
 DECOR_0_LIB:FILEPATH=/usr/lib/libdecor-0.so
 
+//ON
+DGLFW_USE_WAYLAND:BOOL=OFF
+
 //Doxygen documentation generation tool (https://www.doxygen.nl)
 DOXYGEN_EXECUTABLE:FILEPATH=DOXYGEN_EXECUTABLE-NOTFOUND
 
@@ -343,13 +346,13 @@ GLFW_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build/deps/glfw
 GLFW_BUILD_DOCS:BOOL=ON
 
 //Build the GLFW example programs
-GLFW_BUILD_EXAMPLES:BOOL=ON
+GLFW_BUILD_EXAMPLES:BOOL=OFF
 
 //Build the GLFW test programs
-GLFW_BUILD_TESTS:BOOL=ON
+GLFW_BUILD_TESTS:BOOL=OFF
 
 //Build support for Wayland
-GLFW_BUILD_WAYLAND:BOOL=OFF
+GLFW_BUILD_WAYLAND:BOOL=ON
 
 //Build support for X11
 GLFW_BUILD_X11:BOOL=ON
@@ -367,8 +370,8 @@ GLFW_LIBRARY_TYPE:STRING=
 //Value Computed by CMake
 GLFW_SOURCE_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/deps/glfw
 
-//The directory containing a CMake configuration file for GLM.
-GLM_DIR:PATH=GLM_DIR-NOTFOUND
+//No help, variable specified on the command line.
+GLFW_USE_WAYLAND:UNINITIALIZED=ON
 
 //Path to a file.
 HAVE_XCURSOR_H:FILEPATH=/usr/include/X11/Xcursor/Xcursor.h
@@ -450,9 +453,6 @@ PULSE_LIB:FILEPATH=/usr/lib/libpulse.so
 
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/librt.a
-
-//The directory containing a CMake configuration file for SDL2.
-SDL2_DIR:PATH=/usr/lib/cmake/SDL2
 
 //Value Computed by CMake
 SDL3_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build/deps/sdl2
@@ -666,7 +666,7 @@ SDL_RPATH:BOOL=ON
 SDL_SENSOR:BOOL=ON
 
 //Build a shared version of the library
-SDL_SHARED:BOOL=OFF
+SDL_SHARED:BOOL=ON
 
 //Support the sndio audio API
 SDL_SNDIO:BOOL=ON
@@ -690,11 +690,7 @@ SDL_SSE4_1:BOOL=ON
 SDL_SSE4_2:BOOL=ON
 
 //Build a static version of the library
-SDL_STATIC:BOOL=ON
-
-//Static version of the library should be built with Position Independent
-// Code
-SDL_STATIC_PIC:BOOL=OFF
+SDL_STATIC:BOOL=OFF
 
 //Use iconv() from system-installed libraries
 SDL_SYSTEM_ICONV:BOOL=ON
@@ -789,6 +785,18 @@ UDEV_LIB:FILEPATH=/usr/lib/libudev.so
 //Path to a library.
 USB_1.0_LIB:FILEPATH=/usr/lib/libusb-1.0.so
 
+//Path to a program.
+Vulkan_GLSLANG_VALIDATOR_EXECUTABLE:FILEPATH=/bin/glslangValidator
+
+//Path to a program.
+Vulkan_GLSLC_EXECUTABLE:FILEPATH=/bin/glslc
+
+//Path to a file.
+Vulkan_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+Vulkan_LIBRARY:FILEPATH=/lib/libvulkan.so
+
 //Path to a library.
 WAYLAND_CLIENT_LIB:FILEPATH=/usr/lib/libwayland-client.so
 
@@ -800,6 +808,9 @@ WAYLAND_EGL_LIB:FILEPATH=/usr/lib/libwayland-egl.so
 
 //Path to a program.
 WAYLAND_SCANNER:FILEPATH=/usr/bin/wayland-scanner
+
+//Path to a program.
+WAYLAND_SCANNER_EXECUTABLE:FILEPATH=/usr/bin/wayland-scanner
 
 //Path to a file.
 X11_ICE_INCLUDE_PATH:PATH=/usr/include
@@ -1086,20 +1097,14 @@ apeiron-core_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build
 //Value Computed by CMake
 apeiron-core_IS_TOP_LEVEL:STATIC=ON
 
+//Dependencies for the target
+apeiron-core_LIB_DEPENDS:STATIC=general;SDL2;general;glfw;general;Vulkan::Vulkan;
+
 //Value Computed by CMake
 apeiron-core_SOURCE_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core
 
-//The directory containing a CMake configuration file for glfw-wayland.
-glfw-wayland_DIR:PATH=glfw-wayland_DIR-NOTFOUND
-
-//The directory containing a CMake configuration file for glfw.
-glfw_DIR:PATH=glfw_DIR-NOTFOUND
-
 //Value Computed by CMake
 glm_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build/deps/glm
-
-//The directory containing a CMake configuration file for glm.
-glm_DIR:PATH=/usr/lib/cmake/glm
 
 //Value Computed by CMake
 glm_IS_TOP_LEVEL:STATIC=OFF
@@ -1166,6 +1171,18 @@ pkgcfg_lib_PKG_FONTCONFIG_fontconfig:FILEPATH=/usr/lib/libfontconfig.so
 
 //Path to a library.
 pkgcfg_lib_PKG_FONTCONFIG_freetype:FILEPATH=/usr/lib/libfreetype.so
+
+//Path to a library.
+pkgcfg_lib_Wayland_wayland-client:FILEPATH=/usr/lib/libwayland-client.so
+
+//Path to a library.
+pkgcfg_lib_Wayland_wayland-cursor:FILEPATH=/usr/lib/libwayland-cursor.so
+
+//Path to a library.
+pkgcfg_lib_Wayland_wayland-egl:FILEPATH=/usr/lib/libwayland-egl.so
+
+//Path to a library.
+pkgcfg_lib_Wayland_xkbcommon:FILEPATH=/usr/lib/libxkbcommon.so
 
 
 ########################
@@ -1324,7 +1341,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=10
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1446,6 +1463,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/libOpenGL.so][/usr/lib/li
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Details about finding Vulkan
+FIND_PACKAGE_MESSAGE_DETAILS_Vulkan:INTERNAL=[/lib/libvulkan.so][/usr/include][cfound components: glslc glslangValidator ][v1.3.257()]
 //Details about finding X11
 FIND_PACKAGE_MESSAGE_DETAILS_X11:INTERNAL=[/usr/include][/usr/lib/libX11.so][c ][v()]
 //Have library c
@@ -1476,6 +1495,8 @@ HAVE_CLANG_COMMENT_BLOCK_COMMANDS:INTERNAL=
 HAVE_DLOPEN_IN_LIBC:INTERNAL=1
 //Have symbol elf_aux_info
 HAVE_ELF_AUX_INFO:INTERNAL=
+//Test HAVE_ENABLE_NEW_DTAGS
+HAVE_ENABLE_NEW_DTAGS:INTERNAL=1
 //Test HAVE_GCC_COMMENT_BLOCK_COMMANDS
 HAVE_GCC_COMMENT_BLOCK_COMMANDS:INTERNAL=
 //Test HAVE_GCC_FVISIBILITY
@@ -1516,6 +1537,8 @@ HAVE_LIBUDEV_HEADER:INTERNAL=1
 HAVE_LIBUSB_H:INTERNAL=1
 //Have include linux/input.h
 HAVE_LINUX_INPUT_H:INTERNAL=1
+//Have function memfd_create
+HAVE_MEMFD_CREATE:INTERNAL=1
 //Have symbol nanosleep
 HAVE_NANOSLEEP:INTERNAL=1
 //Test HAVE_OPENGL
@@ -2268,6 +2291,100 @@ SDL_CHECK_REQUIRED_LINK_OPTIONS-ADVANCED:INTERNAL=1
 SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM:INTERNAL=1
 //ADVANCED property for variable: SITE
 SITE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_GLSLANG_VALIDATOR_EXECUTABLE
+Vulkan_GLSLANG_VALIDATOR_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_GLSLC_EXECUTABLE
+Vulkan_GLSLC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_INCLUDE_DIR
+Vulkan_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_LIBRARY
+Vulkan_LIBRARY-ADVANCED:INTERNAL=1
+WAYLAND_PROTOCOLS_CFLAGS:INTERNAL=
+WAYLAND_PROTOCOLS_CFLAGS_I:INTERNAL=
+WAYLAND_PROTOCOLS_CFLAGS_OTHER:INTERNAL=
+WAYLAND_PROTOCOLS_FOUND:INTERNAL=1
+WAYLAND_PROTOCOLS_INCLUDEDIR:INTERNAL=
+WAYLAND_PROTOCOLS_INCLUDE_DIRS:INTERNAL=
+WAYLAND_PROTOCOLS_LDFLAGS:INTERNAL=
+WAYLAND_PROTOCOLS_LDFLAGS_OTHER:INTERNAL=
+WAYLAND_PROTOCOLS_LIBDIR:INTERNAL=
+WAYLAND_PROTOCOLS_LIBRARIES:INTERNAL=
+WAYLAND_PROTOCOLS_LIBRARY_DIRS:INTERNAL=
+WAYLAND_PROTOCOLS_LIBS:INTERNAL=
+WAYLAND_PROTOCOLS_LIBS_L:INTERNAL=
+WAYLAND_PROTOCOLS_LIBS_OTHER:INTERNAL=
+WAYLAND_PROTOCOLS_LIBS_PATHS:INTERNAL=
+WAYLAND_PROTOCOLS_MODULE_NAME:INTERNAL=wayland-protocols
+WAYLAND_PROTOCOLS_PREFIX:INTERNAL=/usr
+WAYLAND_PROTOCOLS_STATIC_CFLAGS:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_CFLAGS_I:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_CFLAGS_OTHER:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_INCLUDE_DIRS:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LDFLAGS:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LDFLAGS_OTHER:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBDIR:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBRARIES:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBRARY_DIRS:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBS:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBS_L:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBS_OTHER:INTERNAL=
+WAYLAND_PROTOCOLS_STATIC_LIBS_PATHS:INTERNAL=
+WAYLAND_PROTOCOLS_VERSION:INTERNAL=1.32
+WAYLAND_PROTOCOLS_wayland-protocols_INCLUDEDIR:INTERNAL=
+WAYLAND_PROTOCOLS_wayland-protocols_LIBDIR:INTERNAL=
+WAYLAND_PROTOCOLS_wayland-protocols_PREFIX:INTERNAL=
+WAYLAND_PROTOCOLS_wayland-protocols_VERSION:INTERNAL=
+Wayland_CFLAGS:INTERNAL=
+Wayland_CFLAGS_I:INTERNAL=
+Wayland_CFLAGS_OTHER:INTERNAL=
+Wayland_FOUND:INTERNAL=1
+Wayland_INCLUDEDIR:INTERNAL=
+Wayland_INCLUDE_DIRS:INTERNAL=
+Wayland_LDFLAGS:INTERNAL=-L/usr/lib;-lwayland-cursor;-lwayland-egl;-lwayland-client;-lxkbcommon
+Wayland_LDFLAGS_OTHER:INTERNAL=
+Wayland_LIBDIR:INTERNAL=
+Wayland_LIBRARIES:INTERNAL=wayland-cursor;wayland-egl;wayland-client;xkbcommon
+Wayland_LIBRARY_DIRS:INTERNAL=/usr/lib
+Wayland_LIBS:INTERNAL=
+Wayland_LIBS_L:INTERNAL=
+Wayland_LIBS_OTHER:INTERNAL=
+Wayland_LIBS_PATHS:INTERNAL=
+Wayland_MODULE_NAME:INTERNAL=
+Wayland_PREFIX:INTERNAL=
+Wayland_STATIC_CFLAGS:INTERNAL=
+Wayland_STATIC_CFLAGS_I:INTERNAL=
+Wayland_STATIC_CFLAGS_OTHER:INTERNAL=
+Wayland_STATIC_INCLUDE_DIRS:INTERNAL=
+Wayland_STATIC_LDFLAGS:INTERNAL=-L/usr/lib;-lwayland-client;-lm;-pthread;-lrt;-L/usr/lib;-lffi;-lwayland-cursor;-L/usr/lib;-lm;-pthread;-lrt;-L/usr/lib;-lffi;-lwayland-egl;-lwayland-client;-lm;-pthread;-lrt;-L/usr/lib;-lffi;-lxkbcommon
+Wayland_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread;-pthread;-pthread
+Wayland_STATIC_LIBDIR:INTERNAL=
+Wayland_STATIC_LIBRARIES:INTERNAL=wayland-client;m;rt;ffi;wayland-cursor;m;rt;ffi;wayland-egl;wayland-client;m;rt;ffi;xkbcommon
+Wayland_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib;/usr/lib;/usr/lib;/usr/lib;/usr/lib
+Wayland_STATIC_LIBS:INTERNAL=
+Wayland_STATIC_LIBS_L:INTERNAL=
+Wayland_STATIC_LIBS_OTHER:INTERNAL=
+Wayland_STATIC_LIBS_PATHS:INTERNAL=
+Wayland_VERSION:INTERNAL=
+Wayland_wayland-client_INCLUDEDIR:INTERNAL=/usr/include
+Wayland_wayland-client_LIBDIR:INTERNAL=/usr/lib
+Wayland_wayland-client_MODULE_NAME:INTERNAL=wayland-client
+Wayland_wayland-client_PREFIX:INTERNAL=/usr
+Wayland_wayland-client_VERSION:INTERNAL=1.22.0
+Wayland_wayland-cursor_INCLUDEDIR:INTERNAL=/usr/include
+Wayland_wayland-cursor_LIBDIR:INTERNAL=/usr/lib
+Wayland_wayland-cursor_MODULE_NAME:INTERNAL=wayland-cursor
+Wayland_wayland-cursor_PREFIX:INTERNAL=/usr
+Wayland_wayland-cursor_VERSION:INTERNAL=1.22.0
+Wayland_wayland-egl_INCLUDEDIR:INTERNAL=/usr/include
+Wayland_wayland-egl_LIBDIR:INTERNAL=/usr/lib
+Wayland_wayland-egl_MODULE_NAME:INTERNAL=wayland-egl
+Wayland_wayland-egl_PREFIX:INTERNAL=/usr
+Wayland_wayland-egl_VERSION:INTERNAL=18.1.0
+Wayland_xkbcommon_INCLUDEDIR:INTERNAL=/usr/include
+Wayland_xkbcommon_LIBDIR:INTERNAL=/usr/lib
+Wayland_xkbcommon_MODULE_NAME:INTERNAL=xkbcommon
+Wayland_xkbcommon_PREFIX:INTERNAL=/usr
+Wayland_xkbcommon_VERSION:INTERNAL=1.5.0
 //ADVANCED property for variable: X11_ICE_INCLUDE_PATH
 X11_ICE_INCLUDE_PATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: X11_ICE_LIB
@@ -2450,6 +2567,8 @@ __pkg_config_arguments_PC_PULSEAUDIO:INTERNAL=IMPORTED_TARGET;libpulse>=5.0
 __pkg_config_arguments_PC_SNDIO:INTERNAL=IMPORTED_TARGET;sndio
 __pkg_config_arguments_PC_WAYLAND:INTERNAL=IMPORTED_TARGET;wayland-client>=1.18;wayland-egl;wayland-cursor;egl;xkbcommon>=0.5.0
 __pkg_config_arguments_PKG_FONTCONFIG:INTERNAL=QUIET;fontconfig
+__pkg_config_arguments_WAYLAND_PROTOCOLS:INTERNAL=REQUIRED;wayland-protocols>=1.15
+__pkg_config_arguments_Wayland:INTERNAL=REQUIRED;wayland-client>=0.2.7;wayland-cursor>=0.2.7;wayland-egl>=0.2.7;xkbcommon>=0.5.0
 __pkg_config_checked_DBUS:INTERNAL=1
 __pkg_config_checked_IBUS:INTERNAL=1
 __pkg_config_checked_PC_GBM:INTERNAL=1
@@ -2462,6 +2581,8 @@ __pkg_config_checked_PC_PULSEAUDIO:INTERNAL=1
 __pkg_config_checked_PC_SNDIO:INTERNAL=1
 __pkg_config_checked_PC_WAYLAND:INTERNAL=1
 __pkg_config_checked_PKG_FONTCONFIG:INTERNAL=1
+__pkg_config_checked_WAYLAND_PROTOCOLS:INTERNAL=1
+__pkg_config_checked_Wayland:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_DBUS_dbus-1
 pkgcfg_lib_DBUS_dbus-1-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_IBUS_gio-2.0
@@ -2502,5 +2623,13 @@ pkgcfg_lib_PC_WAYLAND_xkbcommon-ADVANCED:INTERNAL=1
 pkgcfg_lib_PKG_FONTCONFIG_fontconfig-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_PKG_FONTCONFIG_freetype
 pkgcfg_lib_PKG_FONTCONFIG_freetype-ADVANCED:INTERNAL=1
-prefix_result:INTERNAL=/usr/lib
+//ADVANCED property for variable: pkgcfg_lib_Wayland_wayland-client
+pkgcfg_lib_Wayland_wayland-client-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_Wayland_wayland-cursor
+pkgcfg_lib_Wayland_wayland-cursor-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_Wayland_wayland-egl
+pkgcfg_lib_Wayland_wayland-egl-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_Wayland_xkbcommon
+pkgcfg_lib_Wayland_xkbcommon-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/share/wayland
 

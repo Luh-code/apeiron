@@ -1,12 +1,10 @@
-#ifndef __SDL_MAIN_HPP__
-#define __SDL_MAIN_HPP__
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_video.h>
+#ifndef __GLFW_MAIN_HPP__
+#define __GLFW_MAIN_HPP__
 
 #include <iostream>
+
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
 #define GLM_FORCE_RADIANTS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -14,7 +12,7 @@
 #include <glm/vec4.hpp>
 
 namespace apeiron_core::window {
-void sdl_test();
+void glfw_test();
 } // namespace apeiron_core::window
 
-#endif // __SDL_MAIN_HPP__
+#endif // __GLFW_MAIN_HPP__
