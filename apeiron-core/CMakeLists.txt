@@ -8,13 +8,14 @@ project(
 include(CTest)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ../bin/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../bin/lib)
 
 find_package(Git QUIET)
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/../.git")
 # Update submodules as needed
     option(GIT_SUBMODULE "Check submodules during build" ON)
     if(GIT_SUBMODULE)

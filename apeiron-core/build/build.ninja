@@ -214,12 +214,14 @@ build cmake_object_order_depends_target_apeiron-core: phony || cmake_object_orde
 
 build CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp || cmake_object_order_depends_target_apeiron-core
   DEP_FILE = CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o.d
+  FLAGS = -std=gnu++23
   INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/window/sdl
 
 build CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/window/glfw/glfw_main.cpp || cmake_object_order_depends_target_apeiron-core
   DEP_FILE = CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o.d
+  FLAGS = -std=gnu++23
   INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/window/glfw
@@ -3753,6 +3755,7 @@ build cmake_object_order_depends_target_glfw_window: phony || cmake_object_order
 
 build demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o: CXX_COMPILER__glfw_window_unscanned_ /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/src/main.cpp || cmake_object_order_depends_target_glfw_window
   DEP_FILE = demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o.d
+  FLAGS = -std=gnu++23
   INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
   OBJECT_DIR = demos/glfw_window/CMakeFiles/glfw_window.dir
   OBJECT_FILE_DIR = demos/glfw_window/CMakeFiles/glfw_window.dir/src
@@ -3868,6 +3871,7 @@ build cmake_object_order_depends_target_sdl_window: phony || cmake_object_order_
 
 build demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o: CXX_COMPILER__sdl_window_unscanned_ /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp || cmake_object_order_depends_target_sdl_window
   DEP_FILE = demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o.d
+  FLAGS = -std=gnu++23
   INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
   OBJECT_DIR = demos/sdl_window/CMakeFiles/sdl_window.dir
   OBJECT_FILE_DIR = demos/sdl_window/CMakeFiles/sdl_window.dir/src
@@ -4066,6 +4070,7 @@ build cmake_object_order_depends_target_test0exec: phony || cmake_object_order_d
 
 build tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o: CXX_COMPILER__test0exec_unscanned_ /media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp || cmake_object_order_depends_target_test0exec
   DEP_FILE = tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o.d
+  FLAGS = -std=gnu++23
   INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
   OBJECT_DIR = tests/test0/CMakeFiles/test0exec.dir
   OBJECT_FILE_DIR = tests/test0/CMakeFiles/test0exec.dir/src

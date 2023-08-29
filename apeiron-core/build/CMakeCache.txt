@@ -339,6 +339,9 @@ GBM_LIB:FILEPATH=/usr/lib/libgbm.so
 //Git command line client
 GIT_EXECUTABLE:FILEPATH=/usr/bin/git
 
+//Check submodules during build
+GIT_SUBMODULE:BOOL=ON
+
 //Value Computed by CMake
 GLFW_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build/deps/glfw
 
