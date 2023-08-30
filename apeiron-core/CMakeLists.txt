@@ -27,9 +27,11 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/../.git")
             message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
         endif()
     endif()
+else()
+  message(WARNING "Git repository not found! Not all required libraries may be able to compile/load correctly")
 endif()
 
-find_package(Vulkan REQUIRED FATAL_ERROR)
+find_package(Vulkan REQUIRED)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/sdl2 EXCLUDE_FROM_ALL)
 # find_package(SDL2 REQUIRED)
 set(DGLFW_USE_WAYLAND ON)
@@ -46,6 +48,11 @@ target_sources(apeiron-core
   ${PROJECT_SOURCE_DIR}/src/window/sdl/sdl_main.hpp
   ${PROJECT_SOURCE_DIR}/src/window/glfw/glfw_main.cpp
   ${PROJECT_SOURCE_DIR}/src/window/glfw/glfw_main.hpp
+  ${PROJECT_SOURCE_DIR}/src/window/window.hpp
+
+  ${PROJECT_SOURCE_DIR}/src/vulkan/vk_main.hpp
+  ${PROJECT_SOURCE_DIR}/src/app.hpp
+  ${PROJECT_SOURCE_DIR}/src/app.cpp
   PUBLIC
   ${PROJECT_SOURCE_DIR}/src/include/apeiron_core/apeiron_core.hpp
   INTERFACE

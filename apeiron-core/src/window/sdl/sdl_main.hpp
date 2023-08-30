@@ -1,6 +1,8 @@
 #ifndef __SDL_MAIN_HPP__
 #define __SDL_MAIN_HPP__
 
+#include "../window.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_timer.h>
@@ -11,13 +13,6 @@
 #include <string>
 
 namespace apeiron_core::window {
-
-struct WindowCreateInfo {
-public:
-  const char *title;
-  int posx, posy;
-  int sizex, sizey;
-};
 
 enum SDL_ReturnCodes : int32_t {
   SUCCESS = 0,

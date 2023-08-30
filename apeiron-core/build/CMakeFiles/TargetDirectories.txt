@@ -97,6 +97,14 @@
 /media/para/Projects/apeiron/apeiron-core/build/demos/sdl_window/CMakeFiles/install.dir
 /media/para/Projects/apeiron/apeiron-core/build/demos/sdl_window/CMakeFiles/install/local.dir
 /media/para/Projects/apeiron/apeiron-core/build/demos/sdl_window/CMakeFiles/install/strip.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/test.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/edit_cache.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/rebuild_cache.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/list_install_components.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/install.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/install/local.dir
+/media/para/Projects/apeiron/apeiron-core/build/demos/sdl_vulkan_demo/CMakeFiles/install/strip.dir
 /media/para/Projects/apeiron/apeiron-core/build/tests/CMakeFiles/test.dir
 /media/para/Projects/apeiron/apeiron-core/build/tests/CMakeFiles/edit_cache.dir
 /media/para/Projects/apeiron/apeiron-core/build/tests/CMakeFiles/rebuild_cache.dir

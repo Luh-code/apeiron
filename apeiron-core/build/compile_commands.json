@@ -13,6 +13,12 @@
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
+  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/app.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/app.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/src/app.cpp",
+  "output": "CMakeFiles/apeiron-core.dir/src/app.cpp.o"
+},
+{
+  "directory": "/media/para/Projects/apeiron/apeiron-core/build",
   "command": "/usr/bin/cc -DDLL_EXPORT -DSDL_BUILD_MAJOR_VERSION=3 -DSDL_BUILD_MICRO_VERSION=0 -DSDL_BUILD_MINOR_VERSION=0 -DUSING_GENERATED_CONFIG_H -I/media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/include-config- -I/media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/include -I/media/para/Projects/apeiron/apeiron-core/deps/sdl2/include -I/media/para/Projects/apeiron/apeiron-core/deps/sdl2/src -I/media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/SDL3 -isystem /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/wayland-generated-protocols -isystem /usr/include/pipewire-0.3 -isystem /usr/include/spa-0.2 -isystem /usr/include/libdrm -isystem /usr/include/libdecor-0 -isystem /usr/include/dbus-1.0 -isystem /usr/lib/dbus-1.0/include -isystem /usr/include/ibus-1.0 -isystem /usr/include/glib-2.0 -isystem /usr/lib/glib-2.0/include -isystem /usr/include/sysprof-4 -isystem /usr/include/libmount -isystem /usr/include/blkid -isystem /usr/include/libusb-1.0 -fPIC -fvisibility=hidden -Wall -Wundef -fno-strict-aliasing -Wshadow -Wno-unused-local-typedefs -fdiagnostics-color=always -idirafter/media/para/Projects/apeiron/apeiron-core/deps/sdl2/src/video/khronos -D_REENTRANT -Winvalid-pch -x c-header -include /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/CMakeFiles/SDL3-shared.dir/cmake_pch.h -o deps/sdl2/CMakeFiles/SDL3-shared.dir/cmake_pch.h.gch -c /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/CMakeFiles/SDL3-shared.dir/cmake_pch.h.c",
   "file": "/media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/CMakeFiles/SDL3-shared.dir/cmake_pch.h.c",
   "output": "deps/sdl2/CMakeFiles/SDL3-shared.dir/cmake_pch.h.gch"
@@ -1666,6 +1672,12 @@
   "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp",
   "output": "demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o"
+},
+{
+  "directory": "/media/para/Projects/apeiron/apeiron-core/build",
+  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/src/main.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/src/main.cpp",
+  "output": "demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
