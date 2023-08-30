@@ -8,7 +8,7 @@ void print_error(std::string msg, int32_t ret_code, std::string desc) {
 
 int32_t init_sdl_window(SDL_Window *&window) {
   if (auto ret = apeiron_core::window::sdl_init(static_cast<int32_t>(0));
-      ret != apeiron_core::window::SDL_ReturnCodes::SUCCESS) {
+      ret != apeiron_core::errors::SUCCESS) {
     print_error("Failed to initialize the SDL2 libaray!", ret,
                 apeiron_core::window::sdl_get_error());
     return ret;
@@ -23,7 +23,7 @@ int32_t init_sdl_window(SDL_Window *&window) {
         .sizey = 600,
     };
     if (auto ret = apeiron_core::window::sdl_create_window(window, create_info);
-        ret != apeiron_core::window::SDL_ReturnCodes::SUCCESS) {
+        ret != apeiron_core::errors::SUCCESS) {
       print_error("Failed to create window!", ret,
                   apeiron_core::window::sdl_get_error());
       return ret;
@@ -32,7 +32,7 @@ int32_t init_sdl_window(SDL_Window *&window) {
 
   SDL_Surface *surface = nullptr;
   if (auto ret = apeiron_core::window::sdl_get_surface(surface, window);
-      ret != apeiron_core::window::SDL_ReturnCodes::SUCCESS) {
+      ret != apeiron_core::errors::SUCCESS) {
     print_error("Failed to get the surface from the window!", ret,
                 apeiron_core::window::sdl_get_error());
     return ret;
@@ -62,7 +62,7 @@ int main() {
 
   int32_t i = 0, m = -3, c = 0;
   if (auto ret = apeiron_core::run_app(app, i, m, c);
-      ret != apeiron_core::AppReturnCodes::SUCCESS) {
+      ret != apeiron_core::errors::SUCCESS) {
     print_error("An error occured whilst running app!", ret, "");
     return -1;
   }

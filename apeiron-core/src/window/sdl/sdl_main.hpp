@@ -1,6 +1,7 @@
 #ifndef __SDL_MAIN_HPP__
 #define __SDL_MAIN_HPP__
 
+#include "../../errors.hpp"
 #include "../window.hpp"
 
 #include <SDL2/SDL.h>
@@ -13,15 +14,6 @@
 #include <string>
 
 namespace apeiron_core::window {
-
-enum SDL_ReturnCodes : int32_t {
-  SUCCESS = 0,
-  FAILED_WINDOW_CREATION = -1,
-  FAILED_TO_GET_SURFACE = -2,
-  ALREADY_INITIALIZED = -3,
-  NOT_INITIALIZED = -4,
-  INITIALIZATION_FAILED = -5,
-};
 
 int32_t sdl_init(int32_t flags);
 int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info);

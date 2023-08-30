@@ -1,15 +1,12 @@
 #ifndef __APP_HPP__
 #define __APP_HPP__
 
+#include "errors.hpp"
 #include "vulkan/vk_main.hpp"
 #include <cstdint>
 #include <functional>
 
 namespace apeiron_core {
-
-enum AppReturnCodes : int32_t {
-  SUCCESS = 0,
-};
 
 template <typename I, typename M, typename C> struct App {
 public:
@@ -20,13 +17,13 @@ public:
 template <typename I, typename M, typename C>
 inline int32_t run_app(App<I, M, C> &app, I &i, M &m, C &c) {
   int32_t ret;
-  if (ret = app.init(i); ret < SUCCESS) {
+  if (ret = app.init(i); ret < errors::SUCCESS) {
     return ret;
   }
-  if (ret = app.main_loop(m); ret < SUCCESS) {
+  if (ret = app.main_loop(m); ret < errors::SUCCESS) {
     return ret;
   }
-  if (ret = app.cleanup(c); ret < SUCCESS) {
+  if (ret = app.cleanup(c); ret < errors::SUCCESS) {
     return ret;
   }
   return ret;
