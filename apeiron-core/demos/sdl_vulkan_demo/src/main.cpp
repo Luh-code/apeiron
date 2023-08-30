@@ -16,11 +16,11 @@ int32_t init_sdl_window(SDL_Window *&window) {
 
   {
     apeiron_core::window::WindowCreateInfo create_info{
-        .title = "SDL Window",
-        .posx = SDL_WINDOWPOS_CENTERED,
-        .posy = SDL_WINDOWPOS_CENTERED,
-        .sizex = 800,
-        .sizey = 600,
+        .str_title = "SDL Window",
+        ._posx = SDL_WINDOWPOS_CENTERED,
+        ._posy = SDL_WINDOWPOS_CENTERED,
+        ._sizex = 800,
+        ._sizey = 600,
     };
     if (auto ret = apeiron_core::window::sdl_create_window(window, create_info);
         ret != apeiron_core::errors::SUCCESS) {
@@ -55,9 +55,9 @@ int main() {
   // }
 
   apeiron_core::App<int32_t, int32_t, int32_t> app{
-      .init = apeiron_core::normal_init,
-      .main_loop = main_loop,
-      .cleanup = apeiron_core::normal_cleanup,
+      .p_init = apeiron_core::normal_init,
+      .p_main_loop = main_loop,
+      .p_cleanup = apeiron_core::normal_cleanup,
   };
 
   int32_t i = 0, m = -3, c = 0;

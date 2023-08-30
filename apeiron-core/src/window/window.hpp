@@ -5,9 +5,14 @@ namespace apeiron_core::window {
 
 struct WindowCreateInfo {
 public:
-  const char *title;
-  int posx, posy;
-  int sizex, sizey;
+  const char *str_title;
+  int _posx, _posy;
+  int _sizex, _sizey;
+};
+
+enum WindowType {
+  SDL,
+  GLFW,
 };
 } // namespace apeiron_core::window
 

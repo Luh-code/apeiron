@@ -17,9 +17,9 @@ int32_t sdl_init(int32_t flags) {
 }
 
 int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info) {
-  window =
-      SDL_CreateWindow(create_info.title, create_info.posx, create_info.posy,
-                       create_info.sizex, create_info.sizey, 0);
+  window = SDL_CreateWindow(create_info.str_title, create_info._posx,
+                            create_info._posy, create_info._sizex,
+                            create_info._sizey, 0);
 
   if (!window) {
     return apeiron_core::errors::SDL_FAILED_WINDOW_CREATION;
@@ -60,11 +60,11 @@ int32_t sdl_test(uint32_t millis) {
   SDL_Window *window = nullptr;
   {
     WindowCreateInfo create_info{
-        .title = "SDL Window",
-        .posx = SDL_WINDOWPOS_CENTERED,
-        .posy = SDL_WINDOWPOS_CENTERED,
-        .sizex = 800,
-        .sizey = 600,
+        .str_title = "SDL Window",
+        ._posx = SDL_WINDOWPOS_CENTERED,
+        ._posy = SDL_WINDOWPOS_CENTERED,
+        ._sizex = 800,
+        ._sizey = 600,
     };
     if (auto ret = sdl_create_window(window, create_info);
         ret != apeiron_core::errors::SUCCESS) {
