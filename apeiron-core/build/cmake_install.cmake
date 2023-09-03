@@ -44,6 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  include("/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/cmake_install.cmake")
   include("/media/para/Projects/apeiron/apeiron-core/build/deps/glfw/cmake_install.cmake")
   include("/media/para/Projects/apeiron/apeiron-core/build/deps/glm/cmake_install.cmake")
   include("/media/para/Projects/apeiron/apeiron-core/build/demos/cmake_install.cmake")

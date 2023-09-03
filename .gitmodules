@@ -7,3 +7,6 @@
 [submodule "apeiron-core/deps/sdl2"]
 	path = apeiron-core/deps/sdl2
 	url = git@github.com:libsdl-org/SDL.git
+[submodule "apeiron-core/deps/loguru"]
+	path = apeiron-core/deps/loguru
+	url = git@github.com:emilk/loguru.git

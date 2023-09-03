@@ -406,6 +406,33 @@ HAVE_XSS_H:FILEPATH=/usr/include/X11/extensions/scrnsaver.h
 //Path to a library.
 JACK_LIB:FILEPATH=/usr/lib/libjack.so
 
+//Build the project examples
+LOGURU_BUILD_EXAMPLES:BOOL=OFF
+
+//Build the tests
+LOGURU_BUILD_TESTS:BOOL=OFF
+
+//Generate the install target(s)
+LOGURU_INSTALL:BOOL=OFF
+
+LOGURU_PACKAGE_CONTACT:STRING=Emil Ernerfeldt <emil.ernerfeldt@gmail.com>
+
+LOGURU_PACKAGE_DESCRIPTION_FILE:STRING=/media/para/Projects/apeiron/apeiron-core/deps/loguru/README.md
+
+LOGURU_PACKAGE_DESCRIPTION_SUMMARY:STRING=A lightweight C++ logging library
+
+LOGURU_PACKAGE_URL:STRING=https://github.com/emilk/loguru
+
+LOGURU_PACKAGE_VENDOR:STRING=Emil Ernerfeldt
+
+LOGURU_VERSION:STRING=2.1.0
+
+LOGURU_VERSION_MAJOR:STRING=2
+
+LOGURU_VERSION_MINOR:STRING=1
+
+LOGURU_VERSION_PATCH:STRING=0
+
 //Command to build the project
 MAKECOMMAND:STRING=/usr/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 
@@ -1101,7 +1128,7 @@ apeiron-core_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build
 apeiron-core_IS_TOP_LEVEL:STATIC=ON
 
 //Dependencies for the target
-apeiron-core_LIB_DEPENDS:STATIC=general;SDL2;general;glfw;general;Vulkan::Vulkan;
+apeiron-core_LIB_DEPENDS:STATIC=general;SDL2;general;glfw;general;Vulkan::Vulkan;general;loguru::loguru;
 
 //Value Computed by CMake
 apeiron-core_SOURCE_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core
@@ -1114,6 +1141,15 @@ glm_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 glm_SOURCE_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/deps/glm
+
+//Value Computed by CMake
+loguru_BINARY_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/build/deps/loguru
+
+//Value Computed by CMake
+loguru_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+loguru_SOURCE_DIR:STATIC=/media/para/Projects/apeiron/apeiron-core/deps/loguru
 
 //Path to a library.
 pkgcfg_lib_DBUS_dbus-1:FILEPATH=/usr/lib/libdbus-1.so
@@ -1344,7 +1380,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=13
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

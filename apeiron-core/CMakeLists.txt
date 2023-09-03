@@ -31,6 +31,9 @@ else()
   message(WARNING "Git repository not found! Not all required libraries may be able to compile/load correctly")
 endif()
 
+set(LOGURU_WITH_STREAMS TRUE)
+add_subdirectory(${PROJECT_SOURCE_DIR}/deps/loguru)
+
 find_package(Vulkan REQUIRED)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/sdl2 EXCLUDE_FROM_ALL)
 # find_package(SDL2 REQUIRED)
@@ -71,11 +74,12 @@ target_include_directories(apeiron-core
   # ${GLFW_INCLUDE_DIRS}
   # ${GLM_INCLUDE_DIRS}
 )
-target_link_libraries(apeiron-core
+target_link_libraries(apeiron-core  
   SDL2
   glfw
   glm
   Vulkan::Vulkan
+  loguru::loguru
 )
 
 add_subdirectory(demos)

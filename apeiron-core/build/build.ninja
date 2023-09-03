@@ -210,26 +210,29 @@ build ContinuousSubmit: phony CMakeFiles/ContinuousSubmit
 #############################################
 # Order-only phony target for apeiron-core
 
-build cmake_object_order_depends_target_apeiron-core: phony || cmake_object_order_depends_target_glfw
+build cmake_object_order_depends_target_apeiron-core: phony || cmake_object_order_depends_target_glfw cmake_object_order_depends_target_loguru
 
 build CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp || cmake_object_order_depends_target_apeiron-core
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/window/sdl
 
 build CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/window/glfw/glfw_main.cpp || cmake_object_order_depends_target_apeiron-core
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/window/glfw
 
 build CMakeFiles/apeiron-core.dir/src/app.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/app.cpp || cmake_object_order_depends_target_apeiron-core
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = CMakeFiles/apeiron-core.dir/src/app.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src
 
@@ -241,7 +244,7 @@ build CMakeFiles/apeiron-core.dir/src/app.cpp.o: CXX_COMPILER__apeiron-core_unsc
 #############################################
 # Link the static library /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a
 
-build /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a: CXX_STATIC_LIBRARY_LINKER__apeiron-core_ CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o CMakeFiles/apeiron-core.dir/src/app.cpp.o || deps/glfw/bin/lib/libglfw3.a
+build /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a: CXX_STATIC_LIBRARY_LINKER__apeiron-core_ CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o CMakeFiles/apeiron-core.dir/src/app.cpp.o || deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -549,6 +552,121 @@ build CMakeFiles/ContinuousMemCheck | ${cmake_ninja_workdir}CMakeFiles/Continuou
 build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousSubmit: CUSTOM_COMMAND
   COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build && /usr/bin/ctest -D ContinuousSubmit
   pool = console
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /media/para/Projects/apeiron/apeiron-core/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target loguru
+
+
+#############################################
+# Order-only phony target for loguru
+
+build cmake_object_order_depends_target_loguru: phony || deps/loguru/CMakeFiles/loguru.dir
+
+build deps/loguru/CMakeFiles/loguru.dir/loguru.cpp.o: CXX_COMPILER__loguru_unscanned_ /media/para/Projects/apeiron/apeiron-core/deps/loguru/loguru.cpp || cmake_object_order_depends_target_loguru
+  DEFINES = -DLOGURU_WITH_STREAMS=1
+  DEP_FILE = deps/loguru/CMakeFiles/loguru.dir/loguru.cpp.o.d
+  FLAGS = -std=gnu++23
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
+  OBJECT_DIR = deps/loguru/CMakeFiles/loguru.dir
+  OBJECT_FILE_DIR = deps/loguru/CMakeFiles/loguru.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target loguru
+
+
+#############################################
+# Link the static library deps/bin/lib/libloguru.a
+
+build deps/bin/lib/libloguru.a: CXX_STATIC_LIBRARY_LINKER__loguru_ deps/loguru/CMakeFiles/loguru.dir/loguru.cpp.o
+  OBJECT_DIR = deps/loguru/CMakeFiles/loguru.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = deps/bin/lib/libloguru.a
+  TARGET_PDB = loguru.a.dbg
+
+
+#############################################
+# Utility command for test
+
+build deps/loguru/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build/deps/loguru && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build deps/loguru/test: phony deps/loguru/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build deps/loguru/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build/deps/loguru && /usr/bin/ccmake -S/media/para/Projects/apeiron/apeiron-core -B/media/para/Projects/apeiron/apeiron-core/build
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build deps/loguru/edit_cache: phony deps/loguru/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build deps/loguru/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build/deps/loguru && /usr/bin/cmake --regenerate-during-build -S/media/para/Projects/apeiron/apeiron-core -B/media/para/Projects/apeiron/apeiron-core/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build deps/loguru/rebuild_cache: phony deps/loguru/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build deps/loguru/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build deps/loguru/CMakeFiles/install.util: CUSTOM_COMMAND deps/loguru/all
+  COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build/deps/loguru && /usr/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build deps/loguru/install: phony deps/loguru/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build deps/loguru/CMakeFiles/install/local.util: CUSTOM_COMMAND deps/loguru/all
+  COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build/deps/loguru && /usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build deps/loguru/install/local: phony deps/loguru/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build deps/loguru/CMakeFiles/install/strip.util: CUSTOM_COMMAND deps/loguru/all
+  COMMAND = cd /media/para/Projects/apeiron/apeiron-core/build/deps/loguru && /usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build deps/loguru/install/strip: phony deps/loguru/CMakeFiles/install/strip.util
 
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
@@ -3758,12 +3876,13 @@ build demos/install/strip: phony demos/CMakeFiles/install/strip.util
 #############################################
 # Order-only phony target for glfw_window
 
-build cmake_object_order_depends_target_glfw_window: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw
+build cmake_object_order_depends_target_glfw_window: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw cmake_object_order_depends_target_loguru
 
 build demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o: CXX_COMPILER__glfw_window_unscanned_ /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/src/main.cpp || cmake_object_order_depends_target_glfw_window
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = demos/glfw_window/CMakeFiles/glfw_window.dir
   OBJECT_FILE_DIR = demos/glfw_window/CMakeFiles/glfw_window.dir/src
 
@@ -3775,9 +3894,9 @@ build demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o: CXX_COMPILER_
 #############################################
 # Link the executable /media/para/Projects/apeiron/apeiron-core/bin/demo/glfw_window
 
-build /media/para/Projects/apeiron/apeiron-core/bin/demo/glfw_window: CXX_EXECUTABLE_LINKER__glfw_window_ demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a
+build /media/para/Projects/apeiron/apeiron-core/bin/demo/glfw_window: CXX_EXECUTABLE_LINKER__glfw_window_ demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so deps/bin/lib/libloguru.a || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
   LINK_FLAGS = -rdynamic
-  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so
+  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so  deps/bin/lib/libloguru.a
   OBJECT_DIR = demos/glfw_window/CMakeFiles/glfw_window.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -3874,12 +3993,13 @@ build demos/glfw_window/install/strip: phony demos/glfw_window/CMakeFiles/instal
 #############################################
 # Order-only phony target for sdl_window
 
-build cmake_object_order_depends_target_sdl_window: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw
+build cmake_object_order_depends_target_sdl_window: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw cmake_object_order_depends_target_loguru
 
 build demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o: CXX_COMPILER__sdl_window_unscanned_ /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp || cmake_object_order_depends_target_sdl_window
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = demos/sdl_window/CMakeFiles/sdl_window.dir
   OBJECT_FILE_DIR = demos/sdl_window/CMakeFiles/sdl_window.dir/src
 
@@ -3891,9 +4011,9 @@ build demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o: CXX_COMPILER__s
 #############################################
 # Link the executable /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_window
 
-build /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_window: CXX_EXECUTABLE_LINKER__sdl_window_ demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a
+build /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_window: CXX_EXECUTABLE_LINKER__sdl_window_ demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so deps/bin/lib/libloguru.a || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
   LINK_FLAGS = -rdynamic
-  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so
+  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so  deps/bin/lib/libloguru.a
   OBJECT_DIR = demos/sdl_window/CMakeFiles/sdl_window.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -3990,12 +4110,13 @@ build demos/sdl_window/install/strip: phony demos/sdl_window/CMakeFiles/install/
 #############################################
 # Order-only phony target for sdl_vulkan_demo
 
-build cmake_object_order_depends_target_sdl_vulkan_demo: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw
+build cmake_object_order_depends_target_sdl_vulkan_demo: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw cmake_object_order_depends_target_loguru
 
 build demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o: CXX_COMPILER__sdl_vulkan_demo_unscanned_ /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/src/main.cpp || cmake_object_order_depends_target_sdl_vulkan_demo
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir
   OBJECT_FILE_DIR = demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src
 
@@ -4007,9 +4128,9 @@ build demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o: CXX_C
 #############################################
 # Link the executable /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_vulkan_demo
 
-build /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_vulkan_demo: CXX_EXECUTABLE_LINKER__sdl_vulkan_demo_ demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a
+build /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_vulkan_demo: CXX_EXECUTABLE_LINKER__sdl_vulkan_demo_ demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so deps/bin/lib/libloguru.a || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
   LINK_FLAGS = -rdynamic
-  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so
+  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so  deps/bin/lib/libloguru.a
   OBJECT_DIR = demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -4189,12 +4310,13 @@ build tests/install/strip: phony tests/CMakeFiles/install/strip.util
 #############################################
 # Order-only phony target for test0exec
 
-build cmake_object_order_depends_target_test0exec: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw
+build cmake_object_order_depends_target_test0exec: phony || cmake_object_order_depends_target_apeiron-core cmake_object_order_depends_target_glfw cmake_object_order_depends_target_loguru
 
 build tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o: CXX_COMPILER__test0exec_unscanned_ /media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp || cmake_object_order_depends_target_test0exec
+  DEFINES = -DLOGURU_WITH_STREAMS=1
   DEP_FILE = tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o.d
   FLAGS = -std=gnu++23
-  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = tests/test0/CMakeFiles/test0exec.dir
   OBJECT_FILE_DIR = tests/test0/CMakeFiles/test0exec.dir/src
 
@@ -4206,9 +4328,9 @@ build tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o: CXX_COMPILER__test0ex
 #############################################
 # Link the executable tests/bin/test0exec
 
-build tests/bin/test0exec: CXX_EXECUTABLE_LINKER__test0exec_ tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a
+build tests/bin/test0exec: CXX_EXECUTABLE_LINKER__test0exec_ tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o | /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/bin/lib/libglfw3.a /usr/lib/librt.a /usr/lib/libm.so /lib/libvulkan.so deps/bin/lib/libloguru.a || /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
   LINK_FLAGS = -rdynamic
-  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so
+  LINK_LIBRARIES = /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a  -lSDL2  deps/glfw/bin/lib/libglfw3.a  -Wl,-Bstatic  -lrt  -Wl,-Bdynamic  -lm  -ldl  /lib/libvulkan.so  deps/bin/lib/libloguru.a
   OBJECT_DIR = tests/test0/CMakeFiles/test0exec.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -4314,6 +4436,10 @@ build libapeiron-core.a: phony /media/para/Projects/apeiron/apeiron-core/bin/lib
 
 build libglfw3.a: phony deps/glfw/bin/lib/libglfw3.a
 
+build libloguru.a: phony deps/bin/lib/libloguru.a
+
+build loguru: phony deps/bin/lib/libloguru.a
+
 build sdl_vulkan_demo: phony /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_vulkan_demo
 
 build sdl_window: phony /media/para/Projects/apeiron/apeiron-core/bin/demo/sdl_window
@@ -4332,7 +4458,7 @@ build update_mappings: phony deps/glfw/src/update_mappings
 #############################################
 # Folder: /media/para/Projects/apeiron/apeiron-core/build
 
-build all: phony /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/glfw/all deps/glm/all demos/all tests/all
+build all: phony /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a deps/loguru/all deps/glfw/all deps/glm/all demos/all tests/all
 
 # =============================================================================
 
@@ -4393,6 +4519,13 @@ build deps/glm/glm/all: phony
 # =============================================================================
 
 #############################################
+# Folder: /media/para/Projects/apeiron/apeiron-core/build/deps/loguru
+
+build deps/loguru/all: phony deps/bin/lib/libloguru.a
+
+# =============================================================================
+
+#############################################
 # Folder: /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2
 
 build deps/sdl2/all: phony deps/bin/lib/libSDL3.so deps/bin/lib/libSDL3_test.a
@@ -4418,14 +4551,14 @@ build tests/test0/all: phony tests/bin/test0exec
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/HEAD /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/refs/heads/main /media/para/Projects/apeiron/apeiron-core/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3.pc.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/src/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/sdl2/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/3rdparty.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/CheckCPUArchitecture.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/SDL3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/cmake_uninstall.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/macros.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlchecks.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlcompilers.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlmanpages.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlplatform.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdltargets.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_build_config.h.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_revision.h.cmake /media/para/Projects/apeiron/apeiron-core/tests/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/tests/test0/CMakeLists.txt /usr/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /usr/share/cmake/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /usr/share/cmake/Modules/CMakeCInformation.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeDependentOption.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakePackageConfigHelpers.cmake /usr/share/cmake/Modules/CMakeParseArguments.cmake /usr/share/cmake/Modules/CMakePushCheckState.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CTest.cmake /usr/share/cmake/Modules/CTestTargets.cmake /usr/share/cmake/Modules/CTestUseLaunchers.cmake /usr/share/cmake/Modules/CheckCCompilerFlag.cmake /usr/share/cmake/Modules/CheckCSourceCompiles.cmake /usr/share/cmake/Modules/CheckCSourceRuns.cmake /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckFunctionExists.cmake /usr/share/cmake/Modules/CheckIncludeFile.cmake /usr/share/cmake/Modules/CheckIncludeFiles.cmake /usr/share/cmake/Modules/CheckLanguage.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/CheckLinkerFlag.cmake /usr/share/cmake/Modules/CheckStructHasMember.cmake /usr/share/cmake/Modules/CheckSymbolExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-C.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/DartConfiguration.tcl.in /usr/share/cmake/Modules/FindALSA.cmake /usr/share/cmake/Modules/FindDoxygen.cmake /usr/share/cmake/Modules/FindFontconfig.cmake /usr/share/cmake/Modules/FindFreetype.cmake /usr/share/cmake/Modules/FindGit.cmake /usr/share/cmake/Modules/FindOpenGL.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindPkgConfig.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/FindVulkan.cmake /usr/share/cmake/Modules/FindX11.cmake /usr/share/cmake/Modules/GNUInstallDirs.cmake /usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake /usr/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake /usr/share/cmake/Modules/Internal/CheckLinkerFlag.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Internal/CheckSourceRuns.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake /usr/share/cmake/Modules/SelectLibraryConfigurations.cmake /usr/share/cmake/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake deps/sdl2/CMakeFiles/git-data/grabRef.cmake deps/sdl2/SDL_build_config.h.intermediate
+build build.ninja: RERUN_CMAKE | /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/HEAD /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/refs/heads/main /media/para/Projects/apeiron/apeiron-core/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3.pc.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/src/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/loguru/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/loguru/cmake/utilities.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/3rdparty.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/CheckCPUArchitecture.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/SDL3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/cmake_uninstall.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/macros.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlchecks.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlcompilers.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlmanpages.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlplatform.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdltargets.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_build_config.h.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_revision.h.cmake /media/para/Projects/apeiron/apeiron-core/tests/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/tests/test0/CMakeLists.txt /usr/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /usr/share/cmake/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /usr/share/cmake/Modules/CMakeCInformation.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeDependentOption.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakePackageConfigHelpers.cmake /usr/share/cmake/Modules/CMakeParseArguments.cmake /usr/share/cmake/Modules/CMakePushCheckState.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CTest.cmake /usr/share/cmake/Modules/CTestTargets.cmake /usr/share/cmake/Modules/CTestUseLaunchers.cmake /usr/share/cmake/Modules/CheckCCompilerFlag.cmake /usr/share/cmake/Modules/CheckCSourceCompiles.cmake /usr/share/cmake/Modules/CheckCSourceRuns.cmake /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckFunctionExists.cmake /usr/share/cmake/Modules/CheckIncludeFile.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckIncludeFiles.cmake /usr/share/cmake/Modules/CheckLanguage.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/CheckLinkerFlag.cmake /usr/share/cmake/Modules/CheckStructHasMember.cmake /usr/share/cmake/Modules/CheckSymbolExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-C.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/DartConfiguration.tcl.in /usr/share/cmake/Modules/FindALSA.cmake /usr/share/cmake/Modules/FindDoxygen.cmake /usr/share/cmake/Modules/FindFontconfig.cmake /usr/share/cmake/Modules/FindFreetype.cmake /usr/share/cmake/Modules/FindGit.cmake /usr/share/cmake/Modules/FindOpenGL.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindPkgConfig.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/FindVulkan.cmake /usr/share/cmake/Modules/FindX11.cmake /usr/share/cmake/Modules/GNUInstallDirs.cmake /usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake /usr/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake /usr/share/cmake/Modules/Internal/CheckLinkerFlag.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Internal/CheckSourceRuns.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake /usr/share/cmake/Modules/SelectLibraryConfigurations.cmake /usr/share/cmake/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake deps/sdl2/CMakeFiles/git-data/grabRef.cmake deps/sdl2/SDL_build_config.h.intermediate
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/HEAD /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/refs/heads/main /media/para/Projects/apeiron/apeiron-core/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3.pc.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/src/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/sdl2/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/3rdparty.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/CheckCPUArchitecture.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/SDL3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/cmake_uninstall.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/macros.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlchecks.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlcompilers.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlmanpages.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlplatform.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdltargets.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_build_config.h.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_revision.h.cmake /media/para/Projects/apeiron/apeiron-core/tests/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/tests/test0/CMakeLists.txt /usr/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /usr/share/cmake/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /usr/share/cmake/Modules/CMakeCInformation.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeDependentOption.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakePackageConfigHelpers.cmake /usr/share/cmake/Modules/CMakeParseArguments.cmake /usr/share/cmake/Modules/CMakePushCheckState.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CTest.cmake /usr/share/cmake/Modules/CTestTargets.cmake /usr/share/cmake/Modules/CTestUseLaunchers.cmake /usr/share/cmake/Modules/CheckCCompilerFlag.cmake /usr/share/cmake/Modules/CheckCSourceCompiles.cmake /usr/share/cmake/Modules/CheckCSourceRuns.cmake /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckFunctionExists.cmake /usr/share/cmake/Modules/CheckIncludeFile.cmake /usr/share/cmake/Modules/CheckIncludeFiles.cmake /usr/share/cmake/Modules/CheckLanguage.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/CheckLinkerFlag.cmake /usr/share/cmake/Modules/CheckStructHasMember.cmake /usr/share/cmake/Modules/CheckSymbolExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-C.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/DartConfiguration.tcl.in /usr/share/cmake/Modules/FindALSA.cmake /usr/share/cmake/Modules/FindDoxygen.cmake /usr/share/cmake/Modules/FindFontconfig.cmake /usr/share/cmake/Modules/FindFreetype.cmake /usr/share/cmake/Modules/FindGit.cmake /usr/share/cmake/Modules/FindOpenGL.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindPkgConfig.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/FindVulkan.cmake /usr/share/cmake/Modules/FindX11.cmake /usr/share/cmake/Modules/GNUInstallDirs.cmake /usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake /usr/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake /usr/share/cmake/Modules/Internal/CheckLinkerFlag.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Internal/CheckSourceRuns.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake /usr/share/cmake/Modules/SelectLibraryConfigurations.cmake /usr/share/cmake/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake deps/sdl2/CMakeFiles/git-data/grabRef.cmake deps/sdl2/SDL_build_config.h.intermediate: phony
+build /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/HEAD /media/para/Projects/apeiron/.git/modules/apeiron-core/deps/sdl2/refs/heads/main /media/para/Projects/apeiron/apeiron-core/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3.pc.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMake/glfw3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/glfw/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glfw/src/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/glm/glm/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/loguru/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/loguru/cmake/utilities.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/3rdparty.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/CheckCPUArchitecture.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/GetGitRevisionDescription.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/SDL3Config.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/cmake_uninstall.cmake.in /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/macros.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlchecks.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlcompilers.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlmanpages.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdlplatform.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/cmake/sdltargets.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_build_config.h.cmake /media/para/Projects/apeiron/apeiron-core/deps/sdl2/include/build_config/SDL_revision.h.cmake /media/para/Projects/apeiron/apeiron-core/tests/CMakeLists.txt /media/para/Projects/apeiron/apeiron-core/tests/test0/CMakeLists.txt /usr/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in /usr/share/cmake/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /usr/share/cmake/Modules/CMakeCInformation.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeDependentOption.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakePackageConfigHelpers.cmake /usr/share/cmake/Modules/CMakeParseArguments.cmake /usr/share/cmake/Modules/CMakePushCheckState.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CTest.cmake /usr/share/cmake/Modules/CTestTargets.cmake /usr/share/cmake/Modules/CTestUseLaunchers.cmake /usr/share/cmake/Modules/CheckCCompilerFlag.cmake /usr/share/cmake/Modules/CheckCSourceCompiles.cmake /usr/share/cmake/Modules/CheckCSourceRuns.cmake /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckFunctionExists.cmake /usr/share/cmake/Modules/CheckIncludeFile.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckIncludeFiles.cmake /usr/share/cmake/Modules/CheckLanguage.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/CheckLinkerFlag.cmake /usr/share/cmake/Modules/CheckStructHasMember.cmake /usr/share/cmake/Modules/CheckSymbolExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-C.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/DartConfiguration.tcl.in /usr/share/cmake/Modules/FindALSA.cmake /usr/share/cmake/Modules/FindDoxygen.cmake /usr/share/cmake/Modules/FindFontconfig.cmake /usr/share/cmake/Modules/FindFreetype.cmake /usr/share/cmake/Modules/FindGit.cmake /usr/share/cmake/Modules/FindOpenGL.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindPkgConfig.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/FindVulkan.cmake /usr/share/cmake/Modules/FindX11.cmake /usr/share/cmake/Modules/GNUInstallDirs.cmake /usr/share/cmake/Modules/Internal/CheckCompilerFlag.cmake /usr/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake /usr/share/cmake/Modules/Internal/CheckLinkerFlag.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Internal/CheckSourceRuns.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake /usr/share/cmake/Modules/SelectLibraryConfigurations.cmake /usr/share/cmake/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake deps/sdl2/CMakeFiles/git-data/grabRef.cmake deps/sdl2/SDL_build_config.h.intermediate: phony
 
 
 #############################################

@@ -1,5 +1,7 @@
 #include "apeiron_core/apeiron_core.hpp"
 #include <SDL2/SDL_video.h>
+#include <loguru.hpp>
+#include <valarray>
 
 void print_error(std::string msg, int32_t ret_code, std::string desc) {
   printf((std::string("%s (code: %d)") + (desc != "" ? "  --> %s\n" : "%s"))
@@ -45,15 +47,12 @@ int32_t init_sdl_window(SDL_Window *&window) {
 }
 
 int32_t main_loop(int32_t test) {
-  std::cout << "Main loop reached!!!\n";
+  LOG_SCOPE_F(INFO, "Main Loop");
   return test;
 }
 
-int main() {
-  // SDL_Window *window;
-  // if (auto ret = init_sdl_window(window); ret != 0) {
-  //   return -1;
-  // }
+int main(int32_t argc, char *argv[]) {
+  loguru::init(argc, argv);
 
   apeiron_core::App<apeiron_core::ApplicationCreateInfo *, int32_t, int32_t>
       app{
@@ -63,7 +62,8 @@ int main() {
       };
 
   apeiron_core::window::WindowCreateInfo window_create_info{
-      ._windowType = apeiron_core::window::WindowType::SDL,
+      //._windowType = apeiron_core::window::WindowType::SDL,
+      ._windowType = 4,
       .str_title = "SDL Vulkan window",
       ._posx = SDL_WINDOWPOS_CENTERED,
       ._posy = SDL_WINDOWPOS_CENTERED,
@@ -71,14 +71,14 @@ int main() {
       ._sizey = 600,
   };
   apeiron_core::ApplicationCreateInfo create_info{
-      .p_windowCreateInfo = &window_create_info,
+      //.p_windowCreateInfo = &window_create_info,
   };
   int32_t m = 0, c = 0;
   apeiron_core::ApplicationCreateInfo *p = &create_info;
   if (auto ret = apeiron_core::run_app<apeiron_core::ApplicationCreateInfo *,
                                        int32_t, int32_t>(app, p, m, c);
       ret != apeiron_core::Errors::SUCCESS) {
-    print_error("An error occured whilst running app!", ret, "");
+    LOG_F(INFO, "An error occured whilst running app! (code: %d)", ret);
     return -1;
   }
 

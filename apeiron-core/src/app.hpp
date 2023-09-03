@@ -3,9 +3,11 @@
 
 #include "errors.hpp"
 #include "vulkan/vk_main.hpp"
+#include "window/sdl/sdl_main.hpp"
 #include "window/window.hpp"
 #include <cstdint>
 #include <functional>
+#include <loguru.hpp>
 
 namespace apeiron_core {
 

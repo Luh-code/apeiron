@@ -34,6 +34,14 @@
 /media/para/Projects/apeiron/apeiron-core/build/CMakeFiles/install.dir
 /media/para/Projects/apeiron/apeiron-core/build/CMakeFiles/install/local.dir
 /media/para/Projects/apeiron/apeiron-core/build/CMakeFiles/install/strip.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/loguru.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/test.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/edit_cache.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/rebuild_cache.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/list_install_components.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/install.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/install/local.dir
+/media/para/Projects/apeiron/apeiron-core/build/deps/loguru/CMakeFiles/install/strip.dir
 /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/CMakeFiles/SDL3-shared.dir
 /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/CMakeFiles/SDL3_test.dir
 /media/para/Projects/apeiron/apeiron-core/build/deps/sdl2/CMakeFiles/uninstall.dir

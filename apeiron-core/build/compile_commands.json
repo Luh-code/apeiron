@@ -1,21 +1,27 @@
 [
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/src/window/sdl/sdl_main.cpp",
   "output": "CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/window/glfw/glfw_main.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/window/glfw/glfw_main.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/src/window/glfw/glfw_main.cpp",
   "output": "CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/app.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/app.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/app.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/app.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/src/app.cpp",
   "output": "CMakeFiles/apeiron-core.dir/src/app.cpp.o"
+},
+{
+  "directory": "/media/para/Projects/apeiron/apeiron-core/build",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o deps/loguru/CMakeFiles/loguru.dir/loguru.cpp.o -c /media/para/Projects/apeiron/apeiron-core/deps/loguru/loguru.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/deps/loguru/loguru.cpp",
+  "output": "deps/loguru/CMakeFiles/loguru.dir/loguru.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
@@ -1663,25 +1669,25 @@
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/src/main.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/glfw_window/src/main.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/demos/glfw_window/src/main.cpp",
   "output": "demos/glfw_window/CMakeFiles/glfw_window.dir/src/main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/demos/sdl_window/src/main.cpp",
   "output": "demos/sdl_window/CMakeFiles/sdl_window.dir/src/main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/src/main.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/src/main.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/demos/sdl_vulkan_demo/src/main.cpp",
   "output": "demos/sdl_vulkan_demo/CMakeFiles/sdl_vulkan_demo.dir/src/main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -std=gnu++23 -o tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o -c /media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/src/include -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o -c /media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp",
   "file": "/media/para/Projects/apeiron/apeiron-core/tests/test0/src/test.cpp",
   "output": "tests/test0/CMakeFiles/test0exec.dir/src/test.cpp.o"
 }
