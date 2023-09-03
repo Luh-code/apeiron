@@ -1,4 +1,5 @@
 #include "apeiron_core/apeiron_core.hpp"
+#include <SDL2/SDL_video.h>
 
 void print_error(std::string msg, int32_t ret_code, std::string desc) {
   printf((std::string("%s (code: %d)") + (desc != "" ? "  --> %s\n" : "%s"))
@@ -8,7 +9,7 @@ void print_error(std::string msg, int32_t ret_code, std::string desc) {
 
 int32_t init_sdl_window(SDL_Window *&window) {
   if (auto ret = apeiron_core::window::sdl_init(static_cast<int32_t>(0));
-      ret != apeiron_core::errors::SUCCESS) {
+      ret != apeiron_core::Errors::SUCCESS) {
     print_error("Failed to initialize the SDL2 libaray!", ret,
                 apeiron_core::window::sdl_get_error());
     return ret;
@@ -23,7 +24,7 @@ int32_t init_sdl_window(SDL_Window *&window) {
         ._sizey = 600,
     };
     if (auto ret = apeiron_core::window::sdl_create_window(window, create_info);
-        ret != apeiron_core::errors::SUCCESS) {
+        ret != apeiron_core::Errors::SUCCESS) {
       print_error("Failed to create window!", ret,
                   apeiron_core::window::sdl_get_error());
       return ret;
@@ -32,7 +33,7 @@ int32_t init_sdl_window(SDL_Window *&window) {
 
   SDL_Surface *surface = nullptr;
   if (auto ret = apeiron_core::window::sdl_get_surface(surface, window);
-      ret != apeiron_core::errors::SUCCESS) {
+      ret != apeiron_core::Errors::SUCCESS) {
     print_error("Failed to get the surface from the window!", ret,
                 apeiron_core::window::sdl_get_error());
     return ret;
@@ -54,15 +55,29 @@ int main() {
   //   return -1;
   // }
 
-  apeiron_core::App<int32_t, int32_t, int32_t> app{
-      .p_init = apeiron_core::normal_init,
-      .p_main_loop = main_loop,
-      .p_cleanup = apeiron_core::normal_cleanup,
-  };
+  apeiron_core::App<apeiron_core::ApplicationCreateInfo *, int32_t, int32_t>
+      app{
+          .p_init = apeiron_core::normal_init,
+          .p_main_loop = main_loop,
+          .p_cleanup = apeiron_core::normal_cleanup,
+      };
 
-  int32_t i = 0, m = -3, c = 0;
-  if (auto ret = apeiron_core::run_app(app, i, m, c);
-      ret != apeiron_core::errors::SUCCESS) {
+  apeiron_core::window::WindowCreateInfo window_create_info{
+      ._windowType = apeiron_core::window::WindowType::SDL,
+      .str_title = "SDL Vulkan window",
+      ._posx = SDL_WINDOWPOS_CENTERED,
+      ._posy = SDL_WINDOWPOS_CENTERED,
+      ._sizex = 800,
+      ._sizey = 600,
+  };
+  apeiron_core::ApplicationCreateInfo create_info{
+      .p_windowCreateInfo = &window_create_info,
+  };
+  int32_t m = 0, c = 0;
+  apeiron_core::ApplicationCreateInfo *p = &create_info;
+  if (auto ret = apeiron_core::run_app<apeiron_core::ApplicationCreateInfo *,
+                                       int32_t, int32_t>(app, p, m, c);
+      ret != apeiron_core::Errors::SUCCESS) {
     print_error("An error occured whilst running app!", ret, "");
     return -1;
   }

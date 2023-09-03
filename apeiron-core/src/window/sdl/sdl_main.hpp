@@ -16,9 +16,10 @@
 namespace apeiron_core::window {
 
 int32_t sdl_init(int32_t flags);
+bool sdl_initialized(int32_t flags);
 int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info);
-int32_t sdl_get_surface(SDL_Surface *&surface, SDL_Window *window);
-int32_t sdl_deininit();
+int32_t sdl_get_surface(SDL_Surface *&surface, SDL_Window *&window);
+int32_t sdl_deinit();
 
 const char *sdl_get_error();
 

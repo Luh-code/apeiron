@@ -3,15 +3,15 @@
 
 #include <cstdint>
 
-namespace apeiron_core::errors {
-using error_code = const int32_t;
-
-error_code SUCCESS = 0;
-error_code SDL_FAILED_WINDOW_CREATION = -1;
-error_code SDL_FAILED_TO_GET_SURFACE = -2;
-error_code SDL_ALREADY_INITIALIZED = -3;
-error_code SDL_NOT_INITIALIZED = -4;
-error_code SDL_FAILED_INITIALIZATION = -5;
-} // namespace apeiron_core::errors
+namespace apeiron_core {
+enum Errors : int32_t {
+  SUCCESS = 0,
+  SDL_FAILED_WINDOW_CREATION = -1,
+  SDL_FAILED_TO_GET_SURFACE = -2,
+  SDL_ALREADY_INITIALIZED = -3,
+  SDL_NOT_INITIALIZED = -4,
+  SDL_FAILED_INITIALIZATION = -5,
+};
+} // namespace apeiron_core
 
 #endif // !__ERRORS_HPP__
