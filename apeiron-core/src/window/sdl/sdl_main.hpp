@@ -13,6 +13,8 @@
 #include <iostream>
 #include <string>
 
+#include <loguru.hpp>
+
 namespace apeiron_core::window {
 
 int32_t sdl_init(int32_t flags);

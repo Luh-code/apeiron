@@ -1,6 +1,20 @@
 #ifndef __VK_MAIN_HPP__
 #define __VK_MAIN_HPP__
 
-namespace apeiron::vk {} // namespace apeiron::vk
+#include "../app/app_data.hpp"
+
+#include <cstdint>
+#include <string>
+
+namespace apeiron_core::vk {
+
+struct InstanceCreateInfo {
+public:
+  const char *str_applicationName;
+  uint32_t _version;
+};
+int32_t create_instance(ApplicationData &app_data,
+                        InstanceCreateInfo &create_info);
+} // namespace apeiron_core::vk
 
 #endif // __VK_MAIN_HPP__

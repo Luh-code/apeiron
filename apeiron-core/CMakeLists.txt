@@ -53,9 +53,12 @@ target_sources(apeiron-core
   ${PROJECT_SOURCE_DIR}/src/window/glfw/glfw_main.hpp
   ${PROJECT_SOURCE_DIR}/src/window/window.hpp
 
+  ${PROJECT_SOURCE_DIR}/src/app/app_data.hpp
+  ${PROJECT_SOURCE_DIR}/src/app/app.hpp
+  ${PROJECT_SOURCE_DIR}/src/app/app.cpp
+  
   ${PROJECT_SOURCE_DIR}/src/vulkan/vk_main.hpp
-  ${PROJECT_SOURCE_DIR}/src/app.hpp
-  ${PROJECT_SOURCE_DIR}/src/app.cpp
+  ${PROJECT_SOURCE_DIR}/stc/vulkan/vk_main.cpp
   PUBLIC
   ${PROJECT_SOURCE_DIR}/src/include/apeiron_core/apeiron_core.hpp
   INTERFACE

@@ -22,6 +22,9 @@ bool sdl_initialized(int32_t flags) {
 }
 
 int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info) {
+  VLOG_F(3, "Creating SDL_Window '%s' of size %dx%d", create_info.str_title,
+         create_info._sizex, create_info._sizey);
+
   window = SDL_CreateWindow(create_info.str_title, create_info._posx,
                             create_info._posy, create_info._sizex,
                             create_info._sizey, 0);

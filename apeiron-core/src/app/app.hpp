@@ -1,12 +1,11 @@
 #ifndef __APP_HPP__
 #define __APP_HPP__
 
-#include "errors.hpp"
-#include "vulkan/vk_main.hpp"
-#include "window/sdl/sdl_main.hpp"
-#include "window/window.hpp"
-#include <SDL2/SDL_video.h>
-#include <cstdint>
+#include "../errors.hpp"
+#include "../vulkan/vk_main.hpp"
+#include "../window/sdl/sdl_main.hpp"
+#include "../window/window.hpp"
+#include "app_data.hpp"
 #include <functional>
 #include <loguru.hpp>
 
@@ -15,13 +14,6 @@ namespace apeiron_core {
 struct ApplicationCreateInfo {
 public:
   window::WindowCreateInfo *p_windowCreateInfo;
-};
-
-struct ApplicationData {
-public:
-  int32_t _windowType;
-  SDL_Window *p_SDLWindow;
-  SDL_Surface *p_SDLSurface;
 };
 
 template <typename I, typename IR, typename M, typename MR, typename C,
