@@ -5,6 +5,7 @@
 #include "vulkan/vk_main.hpp"
 #include "window/sdl/sdl_main.hpp"
 #include "window/window.hpp"
+#include <SDL2/SDL_video.h>
 #include <cstdint>
 #include <functional>
 #include <loguru.hpp>
@@ -16,34 +17,63 @@ public:
   window::WindowCreateInfo *p_windowCreateInfo;
 };
 
-template <typename I, typename M, typename C> struct App {
+struct ApplicationData {
 public:
-  int32_t (*p_init)(I);
-  int32_t (*p_main_loop)(M);
-  int32_t (*p_cleanup)(C);
+  window::WindowType _windowType;
+  SDL_Window *p_SDLWindow;
+  SDL_Surface *p_SDLSurface;
 };
-template <typename I, typename M, typename C>
-inline int32_t run_app(App<I, M, C> &app, I &i, M &m, C &c) {
+
+template <typename I, typename IR, typename M, typename MR, typename C,
+          typename CR>
+struct App {
+public:
+  int32_t (*p_init)(I, IR);
+  int32_t (*p_main_loop)(M, MR);
+  int32_t (*p_cleanup)(C, CR);
+};
+template <typename I, typename IR, typename M, typename MR, typename C,
+          typename CR>
+struct AppBootstrap {
+public:
+  App<I, IR, M, MR, C, CR> *p_app;
+
+  I _i;
+  IR _ir;
+  M _m;
+  MR _mr;
+  C _c;
+  CR _cr;
+};
+template <typename I, typename IR, typename M, typename MR, typename C,
+          typename CR>
+inline int32_t run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
   int32_t ret;
-  if (ret = app.p_init(i); ret < Errors::SUCCESS) {
+  if (ret = appBootstrap.p_app->p_init(appBootstrap._i, appBootstrap._ir);
+      ret < Errors::SUCCESS) {
     return ret;
   }
-  if (ret = app.p_main_loop(m); ret < Errors::SUCCESS) {
+  if (ret = appBootstrap.p_app->p_main_loop(appBootstrap._m, appBootstrap._mr);
+      ret < Errors::SUCCESS) {
     return ret;
   }
-  if (ret = app.p_cleanup(c); ret < Errors::SUCCESS) {
+  if (ret = appBootstrap.p_app->p_cleanup(appBootstrap._c, appBootstrap._cr);
+      ret < Errors::SUCCESS) {
     return ret;
   }
   return ret;
 }
 
-int32_t init_window(window::WindowCreateInfo *create_info);
-int32_t init_SDL_window(window::WindowCreateInfo *create_info);
-int32_t
-init_GLFW_window(window::WindowCreateInfo *create_info); // TODO: implement <--
+int32_t init_window(window::WindowCreateInfo *create_info,
+                    ApplicationData &app_data);
+int32_t init_SDL_window(window::WindowCreateInfo *create_info,
+                        ApplicationData &app_data);
+int32_t init_GLFW_window(window::WindowCreateInfo *create_info,
+                         ApplicationData &app_data); // TODO: implement <--
 int32_t init_vulkan();
-int32_t normal_init(ApplicationCreateInfo *create_info);
+int32_t normal_init(ApplicationCreateInfo *create_info,
+                    ApplicationData &app_data);
 int32_t headless_init(int32_t); // TODO: implement <--
-int32_t normal_cleanup(int32_t);
+int32_t normal_cleanup(int32_t, ApplicationData &app_data);
 } // namespace apeiron_core
 #endif // !__APP_HPP__

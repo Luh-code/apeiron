@@ -1,7 +1,8 @@
 #include "app.hpp"
 
 namespace apeiron_core {
-int32_t init_window(window::WindowCreateInfo *create_info) {
+int32_t init_window(window::WindowCreateInfo *create_info,
+                    ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Initializing window");
   // Create window according to _windowType of create_info
   switch (create_info->_windowType) {
@@ -11,11 +12,11 @@ int32_t init_window(window::WindowCreateInfo *create_info) {
       LOG_F(INFO, "Automatically initialized SDL");
       window::sdl_init(0);
     }
-    return init_SDL_window(create_info);
+    return init_SDL_window(create_info, app_data);
   case window::WindowType::GLFW:
     LOG_F(INFO, "Type: GLFW window");
     LOG_F(ERROR, "GLFW windows are not jet implemented!");
-    // init_GLFW_window(create_info);
+    // init_GLFW_window(create_info, app_data);
     return Errors::NOT_IMPLEMENTED_ERROR;
   default:
     LOG_F(ERROR, "'%d' is not a legal window type!", create_info->_windowType);
@@ -24,39 +25,40 @@ int32_t init_window(window::WindowCreateInfo *create_info) {
   return Errors::SUCCESS;
 }
 
-int32_t init_SDL_window(window::WindowCreateInfo *create_info) {
+int32_t init_SDL_window(window::WindowCreateInfo *create_info,
+                        ApplicationData &app_data) {
   if (auto ret = window::sdl_initialized(0); !ret) {
     LOG_F(ERROR, "SDL is not initialized!");
     return Errors::SDL_NOT_INITIALIZED;
   }
 
-  SDL_Window *window = nullptr;
-  if (auto ret = window::sdl_create_window(window, *create_info);
+  if (auto ret = window::sdl_create_window(app_data.p_SDLWindow, *create_info);
       ret != Errors::SUCCESS) {
     return ret;
   }
 
-  SDL_Surface *surface = nullptr;
-  if (auto ret = window::sdl_get_surface(surface, window);
+  if (auto ret =
+          window::sdl_get_surface(app_data.p_SDLSurface, app_data.p_SDLWindow);
       ret != Errors::SUCCESS) {
     return ret;
   }
 
-  SDL_UpdateWindowSurface(window);
+  SDL_UpdateWindowSurface(app_data.p_SDLWindow);
 
-  SDL_Delay(5000);
+  // SDL_Delay(5000);
 
   return Errors::SUCCESS;
 }
 
 int32_t init_vulkan() { return Errors::SUCCESS; }
 
-int32_t normal_init(ApplicationCreateInfo *create_info) {
+int32_t normal_init(ApplicationCreateInfo *create_info,
+                    ApplicationData &app_data) {
   if (!create_info->p_windowCreateInfo) {
     LOG_F(ERROR, "p_windowCreateInfo is not defined!");
     return Errors::WINDOW_CREATE_INFO_NOT_DEFINED;
   }
-  if (auto ret = init_window(create_info->p_windowCreateInfo);
+  if (auto ret = init_window(create_info->p_windowCreateInfo, app_data);
       ret != Errors::SUCCESS) {
     return ret;
   }
@@ -66,5 +68,7 @@ int32_t normal_init(ApplicationCreateInfo *create_info) {
   return Errors::SUCCESS;
 }
 
-int32_t normal_cleanup(int32_t) { return Errors::SUCCESS; }
+int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
+  return Errors::SUCCESS;
+}
 } // namespace apeiron_core
