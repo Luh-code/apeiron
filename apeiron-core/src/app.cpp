@@ -1,10 +1,13 @@
 #include "app.hpp"
+#include "window/sdl/sdl_main.hpp"
+#include "window/window.hpp"
 
 namespace apeiron_core {
 int32_t init_window(window::WindowCreateInfo *create_info,
                     ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Initializing window");
   // Create window according to _windowType of create_info
+  app_data._windowType = create_info->_windowType;
   switch (create_info->_windowType) {
   case window::WindowType::SDL:
     LOG_F(INFO, "Type: SDL window");
@@ -69,6 +72,29 @@ int32_t normal_init(ApplicationCreateInfo *create_info,
 }
 
 int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
+  LOG_SCOPE_F(INFO, "Cleaning up application");
+  switch (app_data._windowType) {
+  case window::WindowType::SDL:
+    LOG_F(INFO, "Cleaning up SDL");
+    if (auto ret = window::sdl_destroy_window(app_data.p_SDLWindow);
+        ret != Errors::SUCCESS) {
+      LOG_F(ERROR, "An error occured whilst destroying SDL window (code:%d)",
+            ret);
+      return ret;
+    }
+    VLOG_F(5, "Successfully destroyed SDL window");
+    if (auto ret = window::sdl_deinit(0); ret != Errors::SUCCESS) {
+      LOG_F(ERROR, "An error occured whilst quitting SDL (code: %d)", ret);
+    }
+    VLOG_F(5, "Successfully quit SDL");
+    break;
+  case window::WindowType::GLFW:
+    LOG_F(INFO, "Cleaning up GLFW window");
+    break;
+  default:
+    LOG_F(ERROR, "'%d' is not a legal window type!", app_data._windowType);
+    return Errors::WINDOW_WINDOWTYPE_NOT_LEGAL;
+  }
   return Errors::SUCCESS;
 }
 } // namespace apeiron_core

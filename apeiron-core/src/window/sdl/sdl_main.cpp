@@ -43,6 +43,11 @@ int32_t sdl_get_surface(SDL_Surface *&surface, SDL_Window *&window) {
   return apeiron_core::Errors::SUCCESS;
 }
 
+int32_t sdl_destroy_window(SDL_Window *&window) {
+  SDL_DestroyWindow(window);
+  return Errors::SUCCESS;
+}
+
 int32_t sdl_deinit(uint32_t flags) {
   flags |= SDL_INIT_VIDEO;
   if (SDL_WasInit(flags) == 0) {

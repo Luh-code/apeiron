@@ -19,7 +19,7 @@ public:
 
 struct ApplicationData {
 public:
-  window::WindowType _windowType;
+  int32_t _windowType;
   SDL_Window *p_SDLWindow;
   SDL_Surface *p_SDLSurface;
 };
@@ -48,6 +48,7 @@ public:
 template <typename I, typename IR, typename M, typename MR, typename C,
           typename CR>
 inline int32_t run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
+  LOG_SCOPE_F(INFO, "Running App");
   int32_t ret;
   if (ret = appBootstrap.p_app->p_init(appBootstrap._i, appBootstrap._ir);
       ret < Errors::SUCCESS) {
