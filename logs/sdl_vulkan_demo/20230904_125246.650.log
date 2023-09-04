@@ -1,0 +1,20 @@
+arguments: ./apeiron-core/bin/demo/sdl_vulkan_demo -v 5
+Current dir: /media/para/Projects/apeiron
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2023-09-04 12:52:46.651 (   0.000s) [main thread     ]             loguru.cpp:841   INFO| Logging to './logs/sdl_vulkan_demo/20230904_125246.650.log', mode: 'w', verbosity: 9
+2023-09-04 12:52:46.651 (   0.001s) [main thread     ]                app.hpp:51    INFO| { Running App
+2023-09-04 12:52:46.651 (   0.001s) [main thread     ]                app.cpp:8     INFO| .   { Initializing window
+2023-09-04 12:52:46.651 (   0.001s) [main thread     ]                app.cpp:13    INFO| .   .   Type: SDL window
+2023-09-04 12:52:46.651 (   0.001s) [main thread     ]                app.cpp:15    INFO| .   .   Automatically initialized SDL
+2023-09-04 12:52:46.760 (   0.110s) [main thread     ]                app.cpp:8     INFO| .   } 0.109 s: Initializing window
+2023-09-04 12:52:46.760 (   0.110s) [main thread     ]               main.cpp:53    INFO| .   { Main Loop
+2023-09-04 12:52:49.828 (   3.178s) [main thread     ]               main.cpp:61    INFO| .   .   Quitting application
+2023-09-04 12:52:49.829 (   3.178s) [main thread     ]               main.cpp:53    INFO| .   } 3.068 s: Main Loop
+2023-09-04 12:52:49.829 (   3.178s) [main thread     ]                app.cpp:75    INFO| .   { Cleaning up application
+2023-09-04 12:52:49.829 (   3.178s) [main thread     ]                app.cpp:78    INFO| .   .   Cleaning up SDL
+2023-09-04 12:52:49.831 (   3.181s) [main thread     ]                app.cpp:85       5| .   .   Successfully destroyed SDL window
+2023-09-04 12:52:49.832 (   3.182s) [main thread     ]                app.cpp:89       5| .   .   Successfully quit SDL
+2023-09-04 12:52:49.832 (   3.182s) [main thread     ]                app.cpp:75    INFO| .   } 0.004 s: Cleaning up application
+2023-09-04 12:52:49.832 (   3.182s) [main thread     ]                app.hpp:51    INFO| } 3.181 s: Running App
+2023-09-04 12:52:49.832 (   3.182s) [main thread     ]             loguru.cpp:538   INFO| atexit

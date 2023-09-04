@@ -2,6 +2,7 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 #include <cstdint>
+#include <limits.h>
 #include <loguru.hpp>
 #include <valarray>
 
@@ -69,6 +70,9 @@ int32_t main_loop(int32_t test, apeiron_core::ApplicationData &app_data) {
 
 int main(int32_t argc, char *argv[]) {
   loguru::init(argc, argv);
+  char log_path[PATH_MAX];
+  loguru::suggest_log_path("./logs/", log_path, sizeof(log_path));
+  loguru::add_file(log_path, loguru::FileMode::Truncate, loguru::Verbosity_MAX);
 
   apeiron_core::App<apeiron_core::ApplicationCreateInfo *,
                     apeiron_core::ApplicationData &, int32_t,

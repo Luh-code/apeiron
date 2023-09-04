@@ -10,14 +10,14 @@ int32_t init_window(window::WindowCreateInfo *create_info,
   app_data._windowType = create_info->_windowType;
   switch (create_info->_windowType) {
   case window::WindowType::SDL:
-    LOG_F(INFO, "Type: SDL window");
+    VLOG_F(1, "Type: SDL window");
     if (!window::sdl_initialized(0)) {
-      LOG_F(INFO, "Automatically initialized SDL");
+      VLOG_F(1, "Automatically initialized SDL");
       window::sdl_init(0);
     }
     return init_SDL_window(create_info, app_data);
   case window::WindowType::GLFW:
-    LOG_F(INFO, "Type: GLFW window");
+    VLOG_F(1, "Type: GLFW window");
     LOG_F(ERROR, "GLFW windows are not jet implemented!");
     // init_GLFW_window(create_info, app_data);
     return Errors::NOT_IMPLEMENTED_ERROR;
@@ -74,20 +74,20 @@ int32_t normal_init(ApplicationCreateInfo *create_info,
 int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Cleaning up application");
   switch (app_data._windowType) {
-  case window::WindowType::SDL:
-    LOG_F(INFO, "Cleaning up SDL");
+  case window::WindowType::SDL: {
+    LOG_SCOPE_F(INFO, "Cleaning up SDL");
     if (auto ret = window::sdl_destroy_window(app_data.p_SDLWindow);
         ret != Errors::SUCCESS) {
       LOG_F(ERROR, "An error occured whilst destroying SDL window (code:%d)",
             ret);
       return ret;
     }
-    VLOG_F(5, "Successfully destroyed SDL window");
+    VLOG_F(2, "Successfully destroyed SDL window");
     if (auto ret = window::sdl_deinit(0); ret != Errors::SUCCESS) {
       LOG_F(ERROR, "An error occured whilst quitting SDL (code: %d)", ret);
     }
-    VLOG_F(5, "Successfully quit SDL");
-    break;
+    VLOG_F(2, "Successfully quit SDL");
+  } break;
   case window::WindowType::GLFW:
     LOG_F(INFO, "Cleaning up GLFW window");
     break;

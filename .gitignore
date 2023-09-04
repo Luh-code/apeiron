@@ -2,3 +2,4 @@ apeiron-core/bin/
 apeiron-core/build/
 apeiron-core/.cache/
 
+logs/
