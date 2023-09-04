@@ -6,49 +6,6 @@
 #include <loguru.hpp>
 #include <valarray>
 
-void print_error(std::string msg, int32_t ret_code, std::string desc) {
-  printf((std::string("%s (code: %d)") + (desc != "" ? "  --> %s\n" : "%s"))
-             .c_str(),
-         msg.c_str(), ret_code, desc.c_str());
-}
-
-int32_t init_sdl_window(SDL_Window *&window) {
-  if (auto ret = apeiron_core::window::sdl_init(static_cast<int32_t>(0));
-      ret != apeiron_core::Errors::SUCCESS) {
-    print_error("Failed to initialize the SDL2 libaray!", ret,
-                apeiron_core::window::sdl_get_error());
-    return ret;
-  }
-
-  {
-    apeiron_core::window::WindowCreateInfo create_info{
-        .str_title = "SDL Window",
-        ._posx = SDL_WINDOWPOS_CENTERED,
-        ._posy = SDL_WINDOWPOS_CENTERED,
-        ._sizex = 800,
-        ._sizey = 600,
-    };
-    if (auto ret = apeiron_core::window::sdl_create_window(window, create_info);
-        ret != apeiron_core::Errors::SUCCESS) {
-      print_error("Failed to create window!", ret,
-                  apeiron_core::window::sdl_get_error());
-      return ret;
-    }
-  }
-
-  SDL_Surface *surface = nullptr;
-  if (auto ret = apeiron_core::window::sdl_get_surface(surface, window);
-      ret != apeiron_core::Errors::SUCCESS) {
-    print_error("Failed to get the surface from the window!", ret,
-                apeiron_core::window::sdl_get_error());
-    return ret;
-  }
-
-  SDL_UpdateWindowSurface(window);
-
-  return 0;
-}
-
 int32_t main_loop(int32_t test, apeiron_core::ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Main Loop");
   bool running = true;
