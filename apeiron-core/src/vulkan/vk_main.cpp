@@ -6,7 +6,7 @@
 namespace apeiron_core::vk {
 int32_t create_instance(ApplicationData &app_data,
                         InstanceCreateInfo &create_info) {
-  VLOG_SCOPE_F(3, "Creating Vulkan Instance");
+  VLOG_SCOPE_F(1, "Creating Vulkan Instance");
   // Setup VkApplicationInfo and VkInstanceCreateInfo
   VkApplicationInfo app_info{
       .sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
@@ -26,10 +26,10 @@ int32_t create_instance(ApplicationData &app_data,
   uint32_t extension_count = 0;
   const char **extensions;
 
-  VLOG_F(3, "Getting instance extensions");
+  VLOG_F(2, "Getting instance extensions");
   switch (app_data._windowType) {
   case apeiron_core::window::WindowType::SDL:
-    VLOG_F(3, "Querying SDL for instance extensions");
+    VLOG_F(2, "Querying SDL for instance extensions");
     if (auto ret = apeiron_core::window::sdl_get_instance_extensions(
             app_data.p_SDLWindow, &extension_count, &extensions);
         ret != Errors::SUCCESS) {
@@ -56,7 +56,7 @@ int32_t create_instance(ApplicationData &app_data,
       if (i + 1 != extension_count)
         extensions_print += "\n";
     }
-    LOG_F(3, "Successfully queried for [%d] VkInstance extensions: \n%s",
+    LOG_F(2, "Successfully queried for [%d] VkInstance extensions: \n%s",
           extension_count, extensions_print.c_str());
   }
 
