@@ -1,4 +1,6 @@
 #include "vk_main.hpp"
+#include <vector>
+#include <vulkan/vulkan_core.h>
 // #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core::vk {
@@ -65,12 +67,52 @@ int32_t create_instance(ApplicationData &app_data,
   instance_create_info.enabledLayerCount = 0; // TODO: Add debugging layers
 
   // Create instance
-  if (auto res =
+  {
+    bool trying_creation = true, creation_success = false, moltenVK_fix = false;
+    VkResult res;
+    while (trying_creation) {
+      res =
           vkCreateInstance(&instance_create_info, nullptr, &app_data._instance);
-      res != VK_SUCCESS) {
-    LOG_F(ERROR, "An error occured when creating VkInstance (code[vk]: %d)",
-          res);
-    return Errors::VULKAN_FAILED_TO_CREATE_INSTANCE;
+      switch (res) {
+      case VK_SUCCESS: {
+        trying_creation = false;
+        creation_success = true;
+        break;
+      }
+
+        // MoltenVK fix -- untested
+      case VK_ERROR_INCOMPATIBLE_DRIVER: {
+        if (moltenVK_fix) {
+          trying_creation = false;
+          break;
+        }
+        moltenVK_fix = true;
+        std::vector<const char *> extensions1(extension_count + 1);
+        for (auto i = 0; i < extension_count; ++i) {
+          extensions1.emplace_back(extensions[i]);
+        }
+
+        extensions1.emplace_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+        instance_create_info.flags |=
+            VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+
+        instance_create_info.enabledExtensionCount =
+            static_cast<uint32_t>(extensions1.size());
+        instance_create_info.ppEnabledExtensionNames = extensions1.data();
+        break;
+      }
+
+      default: {
+        trying_creation = false;
+        break;
+      }
+      }
+    }
+    if (!creation_success) {
+      LOG_F(ERROR, "An error occured when creating VkInstance (code[vk]: %d)",
+            res);
+      return Errors::VULKAN_FAILED_TO_CREATE_INSTANCE;
+    }
   }
 
   return Errors::SUCCESS;
