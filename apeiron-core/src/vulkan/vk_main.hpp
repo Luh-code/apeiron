@@ -2,9 +2,13 @@
 #define __VK_MAIN_HPP__
 
 #include "../app/app_data.hpp"
+#include "../window/sdl/sdl_main.hpp"
+#include "../window/window.hpp"
 
 #include <cstdint>
 #include <string>
+
+#include <vulkan/vulkan.h>
 
 namespace apeiron_core::vk {
 

@@ -74,7 +74,7 @@ int main(int32_t argc, char *argv[]) {
   apeiron_core::ApplicationCreateInfo *p = &create_info;
   if (auto ret = apeiron_core::run_app(app_bootstrap);
       ret != apeiron_core::Errors::SUCCESS) {
-    LOG_F(INFO, "An error occured whilst running app! (code: %d)", ret);
+    LOG_F(ERROR, "An error occured whilst running app! (code: %d)", ret);
     return -1;
   }
 

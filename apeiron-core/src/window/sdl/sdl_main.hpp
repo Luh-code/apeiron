@@ -8,6 +8,7 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_video.h>
+#include <SDL2/SDL_vulkan.h>
 
 #include <cstdint>
 #include <iostream>
@@ -23,6 +24,10 @@ int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info);
 int32_t sdl_get_surface(SDL_Surface *&surface, SDL_Window *&window);
 int32_t sdl_destroy_window(SDL_Window *&window);
 int32_t sdl_deinit(uint32_t flags);
+
+int32_t sdl_get_instance_extensions(SDL_Window *window,
+                                    uint32_t *extension_count,
+                                    const char ***extensions);
 
 const char *sdl_get_error();
 

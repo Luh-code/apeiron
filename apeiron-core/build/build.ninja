@@ -228,13 +228,21 @@ build CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o: CXX_COMPILER_
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/window/glfw
 
-build CMakeFiles/apeiron-core.dir/src/app.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/app.cpp || cmake_object_order_depends_target_apeiron-core
+build CMakeFiles/apeiron-core.dir/src/app/app.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/app/app.cpp || cmake_object_order_depends_target_apeiron-core
   DEFINES = -DLOGURU_WITH_STREAMS=1
-  DEP_FILE = CMakeFiles/apeiron-core.dir/src/app.cpp.o.d
+  DEP_FILE = CMakeFiles/apeiron-core.dir/src/app/app.cpp.o.d
   FLAGS = -std=gnu++23
   INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
-  OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/app
+
+build CMakeFiles/apeiron-core.dir/src/vulkan/vk_main.cpp.o: CXX_COMPILER__apeiron-core_unscanned_ /media/para/Projects/apeiron/apeiron-core/src/vulkan/vk_main.cpp || cmake_object_order_depends_target_apeiron-core
+  DEFINES = -DLOGURU_WITH_STREAMS=1
+  DEP_FILE = CMakeFiles/apeiron-core.dir/src/vulkan/vk_main.cpp.o.d
+  FLAGS = -std=gnu++23
+  INCLUDES = -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru
+  OBJECT_DIR = CMakeFiles/apeiron-core.dir
+  OBJECT_FILE_DIR = CMakeFiles/apeiron-core.dir/src/vulkan
 
 
 # =============================================================================
@@ -244,7 +252,7 @@ build CMakeFiles/apeiron-core.dir/src/app.cpp.o: CXX_COMPILER__apeiron-core_unsc
 #############################################
 # Link the static library /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a
 
-build /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a: CXX_STATIC_LIBRARY_LINKER__apeiron-core_ CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o CMakeFiles/apeiron-core.dir/src/app.cpp.o || deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
+build /media/para/Projects/apeiron/apeiron-core/bin/lib/libapeiron-core.a: CXX_STATIC_LIBRARY_LINKER__apeiron-core_ CMakeFiles/apeiron-core.dir/src/window/sdl/sdl_main.cpp.o CMakeFiles/apeiron-core.dir/src/window/glfw/glfw_main.cpp.o CMakeFiles/apeiron-core.dir/src/app/app.cpp.o CMakeFiles/apeiron-core.dir/src/vulkan/vk_main.cpp.o || deps/bin/lib/libloguru.a deps/glfw/bin/lib/libglfw3.a
   OBJECT_DIR = CMakeFiles/apeiron-core.dir
   POST_BUILD = :
   PRE_LINK = :

@@ -63,7 +63,7 @@ int32_t init_SDL_window(window::WindowCreateInfo *create_info,
                         ApplicationData &app_data);
 int32_t init_GLFW_window(window::WindowCreateInfo *create_info,
                          ApplicationData &app_data); // TODO: implement <--
-int32_t init_vulkan();
+int32_t init_vulkan(ApplicationData &app_data);
 int32_t normal_init(ApplicationCreateInfo *create_info,
                     ApplicationData &app_data);
 int32_t headless_init(int32_t); // TODO: implement <--

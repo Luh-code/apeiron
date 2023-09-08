@@ -2,7 +2,7 @@
 
 namespace apeiron_core::window {
 int32_t sdl_init(int32_t flags) {
-  flags |= SDL_INIT_VIDEO;
+  flags |= SDL_INIT_VIDEO | SDL_WINDOW_VULKAN | SDL_WINDOW_SHOWN;
   if (SDL_WasInit(flags) != 0) {
     return apeiron_core::Errors::SDL_ALREADY_INITIALIZED;
   }
@@ -17,7 +17,8 @@ int32_t sdl_init(int32_t flags) {
 }
 
 bool sdl_initialized(int32_t flags) {
-  flags |= SDL_INIT_VIDEO;
+  flags |= SDL_INIT_VIDEO | SDL_WINDOW_VULKAN | SDL_WINDOW_SHOWN;
+
   return SDL_WasInit(flags);
 }
 
@@ -25,9 +26,10 @@ int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info) {
   VLOG_F(3, "Creating SDL_Window '%s' of size %dx%d", create_info.str_title,
          create_info._sizex, create_info._sizey);
 
-  window = SDL_CreateWindow(create_info.str_title, create_info._posx,
-                            create_info._posy, create_info._sizex,
-                            create_info._sizey, 0);
+  window = SDL_CreateWindow(
+      create_info.str_title, create_info._posx, create_info._posy,
+      create_info._sizex, create_info._sizey,
+      SDL_INIT_VIDEO | SDL_WINDOW_VULKAN | SDL_WINDOW_SHOWN);
 
   if (!window) {
     return apeiron_core::Errors::SDL_FAILED_WINDOW_CREATION;
@@ -59,6 +61,21 @@ int32_t sdl_deinit(uint32_t flags) {
 
   SDL_Quit();
   return apeiron_core::Errors::SUCCESS;
+}
+
+int32_t sdl_get_instance_extensions(SDL_Window *window,
+                                    uint32_t *extension_count,
+                                    const char ***extensions) {
+  if (SDL_Vulkan_GetInstanceExtensions(window, extension_count, 0) ==
+      SDL_FALSE) {
+    return Errors::SDL_FAILED_TO_GET_VK_INSTANCE_EXTENSION_COUNT;
+  }
+  *extensions = new const char *[*extension_count];
+  if (SDL_Vulkan_GetInstanceExtensions(window, extension_count, *extensions) ==
+      SDL_FALSE) {
+    return Errors::SDL_FAILED_TO_GET_VK_INSTANCE_EXTENSIONS;
+  }
+  return Errors::SUCCESS;
 }
 
 const char *sdl_get_error() { return SDL_GetError(); }

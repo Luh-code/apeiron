@@ -13,9 +13,15 @@
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
-  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/app.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/app.cpp",
-  "file": "/media/para/Projects/apeiron/apeiron-core/src/app.cpp",
-  "output": "CMakeFiles/apeiron-core.dir/src/app.cpp.o"
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/app/app.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/app/app.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/src/app/app.cpp",
+  "output": "CMakeFiles/apeiron-core.dir/src/app/app.cpp.o"
+},
+{
+  "directory": "/media/para/Projects/apeiron/apeiron-core/build",
+  "command": "/usr/bin/c++ -DLOGURU_WITH_STREAMS=1 -I/media/para/Projects/apeiron/apeiron-core/deps/glfw/include -I/media/para/Projects/apeiron/apeiron-core/deps/glm -I/media/para/Projects/apeiron/apeiron-core/deps/loguru -std=gnu++23 -o CMakeFiles/apeiron-core.dir/src/vulkan/vk_main.cpp.o -c /media/para/Projects/apeiron/apeiron-core/src/vulkan/vk_main.cpp",
+  "file": "/media/para/Projects/apeiron/apeiron-core/src/vulkan/vk_main.cpp",
+  "output": "CMakeFiles/apeiron-core.dir/src/vulkan/vk_main.cpp.o"
 },
 {
   "directory": "/media/para/Projects/apeiron/apeiron-core/build",
