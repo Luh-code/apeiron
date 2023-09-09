@@ -26,6 +26,18 @@ int32_t create_instance(ApplicationData &app_data,
   uint32_t extension_count = 0;
   const char **extensions;
 
+  {
+    vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
+    std::vector<VkExtensionProperties> extension_properties(extension_count);
+    vkEnumerateInstanceExtensionProperties(nullptr, &extension_count,
+                                           extension_properties.data());
+    VLOG_F(2, "All [%d] Available instance extensions:", extension_count);
+    for (auto i = 0; i < extension_count; ++i) {
+      VLOG_F(2, "\t%s", extension_properties[i].extensionName);
+    }
+  }
+  extension_count = 0;
+
   VLOG_F(2, "Getting instance extensions");
   switch (app_data._windowType) {
   case apeiron_core::window::WindowType::SDL:
@@ -49,15 +61,11 @@ int32_t create_instance(ApplicationData &app_data,
 
   // Log extensions
   {
-    std::string extensions_print = "";
+    LOG_F(2, "Successfully queried for [%d] VkInstance extensions: ",
+          extension_count);
     for (auto i = 0; i < extension_count; ++i) {
-      extensions_print += "\t";
-      extensions_print += extensions[i];
-      if (i + 1 != extension_count)
-        extensions_print += "\n";
+      LOG_F(2, "\t%s", extensions[i]);
     }
-    LOG_F(2, "Successfully queried for [%d] VkInstance extensions: \n%s",
-          extension_count, extensions_print.c_str());
   }
 
   // Set extensions
@@ -75,6 +83,7 @@ int32_t create_instance(ApplicationData &app_data,
           vkCreateInstance(&instance_create_info, nullptr, &app_data._instance);
       switch (res) {
       case VK_SUCCESS: {
+        LOG_F(1, "Created VkInstance successfully");
         trying_creation = false;
         creation_success = true;
         break;
@@ -82,6 +91,7 @@ int32_t create_instance(ApplicationData &app_data,
 
         // MoltenVK fix -- untested
       case VK_ERROR_INCOMPATIBLE_DRIVER: {
+        LOG_F(1, "Applying MoltenVK/Incompatible Driver fix");
         if (moltenVK_fix) {
           trying_creation = false;
           break;
@@ -108,6 +118,7 @@ int32_t create_instance(ApplicationData &app_data,
       }
       }
     }
+    delete[] extensions;
     if (!creation_success) {
       LOG_F(ERROR, "An error occured when creating VkInstance (code[vk]: %d)",
             res);

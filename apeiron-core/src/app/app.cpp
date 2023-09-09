@@ -84,9 +84,19 @@ int32_t normal_init(ApplicationCreateInfo *create_info,
 
 int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Cleaning up application");
+
+  // Clean up Vulkan
+  VLOG_F(1, "Cleaning up Vulkan");
+  // Clean up Instance
+  if (app_data._instance) {
+    vkDestroyInstance(app_data._instance, nullptr);
+    VLOG_F(2, "Cleaned up VkInstance");
+  }
+
+  // Clean up window
   switch (app_data._windowType) {
   case window::WindowType::SDL: {
-    LOG_SCOPE_F(INFO, "Cleaning up SDL");
+    VLOG_SCOPE_F(1, "Cleaning up SDL");
     if (auto ret = window::sdl_destroy_window(app_data.p_SDLWindow);
         ret != Errors::SUCCESS) {
       LOG_F(ERROR, "An error occured whilst destroying SDL window (code:%d)",
@@ -100,12 +110,13 @@ int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
     VLOG_F(2, "Successfully quit SDL");
   } break;
   case window::WindowType::GLFW:
-    LOG_F(INFO, "Cleaning up GLFW window");
+    VLOG_F(1, "Cleaning up GLFW window");
     break;
   default:
     LOG_F(ERROR, "'%d' is not a legal window type!", app_data._windowType);
     return Errors::WINDOW_WINDOWTYPE_NOT_LEGAL;
   }
+
   return Errors::SUCCESS;
 }
 } // namespace apeiron_core

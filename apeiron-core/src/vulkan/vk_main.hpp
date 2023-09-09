@@ -10,6 +10,9 @@
 
 #include <vulkan/vulkan.h>
 
+#include <vector>
+#include <vulkan/vulkan_core.h>
+
 namespace apeiron_core::vk {
 
 struct InstanceCreateInfo {
