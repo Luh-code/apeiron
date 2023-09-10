@@ -19,9 +19,24 @@ struct InstanceCreateInfo {
 public:
   const char *str_applicationName;
   uint32_t _version;
+
+  std::vector<const char *> v_extensions;
+  bool b_queryForExtensions;
+
+  std::vector<const char *> v_layers;
+  bool p_enableValidationLayers =
+#ifdef NDEBUG
+      false
+#else
+      true
+#endif // NDEBUG
+      ;
+  std::vector<const char *> v_validationLayers = {
+      "VK_LAYER_KHRONOS_validation",
+  };
 };
-int32_t create_instance(ApplicationData &app_data,
-                        InstanceCreateInfo &create_info);
+[[nodiscard]] int32_t create_instance(ApplicationData &app_data,
+                                      InstanceCreateInfo &create_info);
 } // namespace apeiron_core::vk
 
 #endif // __VK_MAIN_HPP__

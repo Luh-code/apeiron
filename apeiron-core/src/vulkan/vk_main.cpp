@@ -1,4 +1,5 @@
 #include "vk_main.hpp"
+#include <algorithm>
 #include <vector>
 #include <vulkan/vulkan_core.h>
 // #include <vulkan/vulkan_core.h>
@@ -26,53 +27,108 @@ int32_t create_instance(ApplicationData &app_data,
   uint32_t extension_count = 0;
   const char **extensions;
 
-  {
-    vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
-    std::vector<VkExtensionProperties> extension_properties(extension_count);
-    vkEnumerateInstanceExtensionProperties(nullptr, &extension_count,
-                                           extension_properties.data());
-    VLOG_F(2, "All [%d] Available instance extensions:", extension_count);
-    for (auto i = 0; i < extension_count; ++i) {
-      VLOG_F(2, "\t%s", extension_properties[i].extensionName);
-    }
+  vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
+  std::vector<VkExtensionProperties> extension_properties(extension_count);
+  vkEnumerateInstanceExtensionProperties(nullptr, &extension_count,
+                                         extension_properties.data());
+  VLOG_F(2, "All [%d] Available instance extensions:", extension_count);
+  for (auto i = 0; i < extension_count; ++i) {
+    VLOG_F(2, "\t%s", extension_properties[i].extensionName);
   }
   extension_count = 0;
 
-  VLOG_F(2, "Getting instance extensions");
-  switch (app_data._windowType) {
-  case apeiron_core::window::WindowType::SDL:
-    VLOG_F(2, "Querying SDL for instance extensions");
-    if (auto ret = apeiron_core::window::sdl_get_instance_extensions(
-            app_data.p_SDLWindow, &extension_count, &extensions);
-        ret != Errors::SUCCESS) {
-      LOG_F(ERROR,
-            "An error occured whilst querying SDL for VkInstance extensions "
-            "(code: %d):",
-            ret);
-      LOG_F(ERROR, "\t%s", window::sdl_get_error());
-      return ret;
+  // Query window lib for extensions if wanted
+  if (create_info.b_queryForExtensions) {
+    VLOG_F(2, "Querying instance extensions");
+    switch (app_data._windowType) {
+    case apeiron_core::window::WindowType::SDL:
+      VLOG_F(2, "Querying SDL for instance extensions");
+      if (auto ret = apeiron_core::window::sdl_get_instance_extensions(
+              app_data.p_SDLWindow, &extension_count, &extensions);
+          ret != Errors::SUCCESS) {
+        LOG_F(ERROR,
+              "An error occured whilst querying SDL for VkInstance extensions "
+              "(code: %d):",
+              ret);
+        LOG_F(ERROR, "\t%s", window::sdl_get_error());
+        return ret;
+      }
+      break;
+    case apeiron_core::window::WindowType::GLFW:
+      break;
+    default:
+      break;
     }
-    break;
-  case apeiron_core::window::WindowType::GLFW:
-    break;
-  default:
-    break;
+  }
+
+  // Add queried extensions to v_extensions
+  // extension_count += create_info.v_extensions.size();
+
+  for (auto i = 0; i < extension_count; ++i) {
+    create_info.v_extensions.push_back(extensions[i]);
+  }
+  delete[] extensions;
+
+  // Check for doubles and extension availability
+  {
+    std::vector<const char *> final_extensions{};
+    for (auto i = 0; i < create_info.v_extensions.size(); ++i) {
+      // if (i < create_info.v_extensions.size() - 1 &&
+      //     std::find(std::next(create_info.v_extensions.begin(), i + 1),
+      //               create_info.v_extensions.end(),
+      //               create_info.v_extensions[i]) !=
+      //         create_info.v_extensions.end()) {
+      //   LOG_F(WARNING, "Tried to add VkInstance extension '%s' twice",
+      //         extensions[i]);
+      //   continue;
+      // }
+      bool twice = false;
+      for (auto j = i + 1; j < create_info.v_extensions.size(); ++j) {
+        if (strcmp(create_info.v_extensions[i], create_info.v_extensions[j]) ==
+            0) {
+          twice = true;
+          break;
+        }
+      }
+      if (twice) {
+        LOG_F(WARNING, "Tried to add VkInstance extension '%s' twice",
+              create_info.v_extensions[i]);
+        continue;
+      }
+
+      bool extension_exists = false;
+      for (auto j = 0; j < extension_properties.size(); ++j) {
+        if (strcmp(extension_properties[j].extensionName,
+                   create_info.v_extensions[i]) == 0) {
+          extension_exists = true;
+          break;
+        }
+      }
+      if (!extension_exists) {
+        LOG_F(ERROR, "Unsupported extension '%s', continuing without",
+              create_info.v_extensions[i]);
+        continue;
+      }
+      final_extensions.push_back(create_info.v_extensions[i]);
+    }
+    create_info.v_extensions = final_extensions;
   }
 
   // Log extensions
   {
-    LOG_F(2, "Successfully queried for [%d] VkInstance extensions: ",
-          extension_count);
-    for (auto i = 0; i < extension_count; ++i) {
-      LOG_F(2, "\t%s", extensions[i]);
+    LOG_F(2, "Selected [%lu] VkInstance extensions: ",
+          create_info.v_extensions.size());
+    for (auto i = 0; i < create_info.v_extensions.size(); ++i) {
+      LOG_F(2, "\t%s", create_info.v_extensions[i]);
     }
   }
 
   // Set extensions
-  instance_create_info.enabledExtensionCount = extension_count;
-  instance_create_info.ppEnabledExtensionNames = extensions;
+  instance_create_info.enabledExtensionCount = create_info.v_extensions.size();
+  instance_create_info.ppEnabledExtensionNames =
+      create_info.v_extensions.data();
 
-  instance_create_info.enabledLayerCount = 0; // TODO: Add debugging layers
+  instance_create_info.enabledLayerCount = 0; // TODO: Add validation layers
 
   // Create instance
   {
@@ -97,18 +153,16 @@ int32_t create_instance(ApplicationData &app_data,
           break;
         }
         moltenVK_fix = true;
-        std::vector<const char *> extensions1(extension_count + 1);
-        for (auto i = 0; i < extension_count; ++i) {
-          extensions1.emplace_back(extensions[i]);
-        }
 
-        extensions1.emplace_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+        create_info.v_extensions.push_back(
+            VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
         instance_create_info.flags |=
             VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 
         instance_create_info.enabledExtensionCount =
-            static_cast<uint32_t>(extensions1.size());
-        instance_create_info.ppEnabledExtensionNames = extensions1.data();
+            create_info.v_extensions.size();
+        instance_create_info.ppEnabledExtensionNames =
+            create_info.v_extensions.data();
         break;
       }
 
@@ -118,7 +172,6 @@ int32_t create_instance(ApplicationData &app_data,
       }
       }
     }
-    delete[] extensions;
     if (!creation_success) {
       LOG_F(ERROR, "An error occured when creating VkInstance (code[vk]: %d)",
             res);

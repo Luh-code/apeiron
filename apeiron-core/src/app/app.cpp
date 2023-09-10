@@ -1,4 +1,5 @@
 #include "app.hpp"
+#include <vector>
 
 namespace apeiron_core {
 int32_t init_window(window::WindowCreateInfo *create_info,
@@ -10,7 +11,11 @@ int32_t init_window(window::WindowCreateInfo *create_info,
   case window::WindowType::SDL:
     VLOG_F(1, "Type: SDL window");
     if (!window::sdl_initialized(0)) {
-      window::sdl_init(0);
+      if (auto ret = window::sdl_init(0); ret < Errors::SUCCESS) {
+        VLOG_F(ERROR, "An error occured, whilst initializing SDL (code: %d)",
+               ret);
+        return ret;
+      }
       VLOG_F(1, "Automatically initialized SDL");
     }
     return init_SDL_window(create_info, app_data);
@@ -49,8 +54,6 @@ int32_t init_SDL_window(window::WindowCreateInfo *create_info,
 
   // SDL_Delay(5000);
 
-  LOG_F(INFO, "window: %d", app_data.p_SDLWindow);
-
   return Errors::SUCCESS;
 }
 
@@ -58,6 +61,13 @@ int32_t init_vulkan(ApplicationData &app_data) {
   vk::InstanceCreateInfo instance_create_info{
       .str_applicationName = "SDL Vulkan Window",
       ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
+      .v_extensions =
+          std::vector<const char *>{
+              "VK_KHR_surface",
+              "BLA_BLA_doesnt_exist",
+          },
+      .b_queryForExtensions = true,
+      .v_layers = std::vector<const char *>(0),
   };
   if (auto ret = vk::create_instance(app_data, instance_create_info);
       ret != Errors::SUCCESS) {
