@@ -55,11 +55,19 @@ int32_t init_SDL_window(window::WindowCreateInfo *create_info,
   return Errors::SUCCESS;
 }
 
-int32_t init_vulkan(vk::InstanceCreateInfo *instance_create_info,
+int32_t init_vulkan(ApplicationCreateInfo *create_info,
                     ApplicationData &app_data) {
-  if (auto ret = vk::create_instance(app_data, *instance_create_info);
+  if (auto ret =
+          vk::create_instance(app_data, *create_info->p_instanceCreateInfo);
       ret != Errors::SUCCESS) {
     return ret;
+  }
+  if (create_info->p_instanceCreateInfo->b_enableValidationLayers) {
+    if (auto ret = vk::setup_debug_messenger(
+            app_data, *create_info->p_debugMessengerCreateInfo);
+        ret != Errors::SUCCESS) {
+      return ret;
+    }
   }
   return Errors::SUCCESS;
 }
@@ -74,8 +82,7 @@ int32_t normal_init(ApplicationCreateInfo *create_info,
       ret != Errors::SUCCESS) {
     return ret;
   }
-  if (auto ret = init_vulkan(create_info->p_instanceCreateInfo, app_data);
-      ret != Errors::SUCCESS) {
+  if (auto ret = init_vulkan(create_info, app_data); ret != Errors::SUCCESS) {
     return ret;
   }
   return Errors::SUCCESS;

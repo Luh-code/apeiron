@@ -59,12 +59,23 @@ int main(int32_t argc, char *argv[]) {
       .b_queryForExtensions = true,
       .v_layers = std::vector<const char *>(0),
   };
+  apeiron_core::vk::DebugMessengerCreateInfo debug_messenger_create_info{
+      ._severity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+                   VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                   VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,
+      ._types = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+                VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT,
+      .p_callback = apeiron_core::vk::debug_callback,
+  };
   apeiron_core::ApplicationCreateInfo create_info{
       .p_windowCreateInfo = &window_create_info,
       .p_instanceCreateInfo = &instance_create_info,
+      .p_debugMessengerCreateInfo = &debug_messenger_create_info,
   };
   apeiron_core::ApplicationData app_data{
-
+      .p_allocator = nullptr,
+      .p_debugMessenger = new VkDebugUtilsMessengerEXT{}, // <-- WTF
   };
   int32_t m = 0, c = 0;
   apeiron_core::AppBootstrap<apeiron_core::ApplicationCreateInfo *,

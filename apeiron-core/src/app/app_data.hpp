@@ -12,7 +12,10 @@ public:
   int32_t _windowType;
   SDL_Window *p_SDLWindow;
   SDL_Surface *p_SDLSurface;
+
+  VkAllocationCallbacks *p_allocator;
   VkInstance _instance;
+  VkDebugUtilsMessengerEXT *p_debugMessenger;
 };
 } // namespace apeiron_core
 

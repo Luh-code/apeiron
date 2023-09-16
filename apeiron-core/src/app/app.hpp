@@ -15,6 +15,7 @@ struct ApplicationCreateInfo {
 public:
   window::WindowCreateInfo *p_windowCreateInfo;
   vk::InstanceCreateInfo *p_instanceCreateInfo;
+  vk::DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
 };
 
 template <typename I, typename IR, typename M, typename MR, typename C,
@@ -66,7 +67,7 @@ run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
 [[nodiscard]] int32_t
 init_GLFW_window(window::WindowCreateInfo *create_info,
                  ApplicationData &app_data); // TODO: implement <--
-[[nodiscard]] int32_t init_vulkan(vk::InstanceCreateInfo *instance_create_info,
+[[nodiscard]] int32_t init_vulkan(ApplicationCreateInfo *create_info,
                                   ApplicationData &app_data);
 [[nodiscard]] int32_t normal_init(ApplicationCreateInfo *create_info,
                                   ApplicationData &app_data);

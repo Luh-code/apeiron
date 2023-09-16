@@ -1,4 +1,5 @@
 #include "vk_main.hpp"
+#include <vulkan/vulkan_core.h>
 // #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core::vk {
@@ -64,6 +65,10 @@ int32_t create_instance(ApplicationData &app_data,
   }
   delete[] extensions;
 
+  if (create_info.b_enableValidationLayers) {
+    create_info.v_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+  }
+
   // Check for doubles and extension availability
   {
     std::vector<const char *> final_extensions{};
@@ -116,10 +121,8 @@ int32_t create_instance(ApplicationData &app_data,
   instance_create_info.ppEnabledExtensionNames =
       create_info.v_extensions.data();
 
-  // instance_create_info.enabledLayerCount = 0; // TODO: Add validation layers
-
   // Add Validation layers to layers if requested
-  if (create_info.b_queryForExtensions) {
+  if (create_info.b_enableValidationLayers) {
     for (auto i = 0; i < create_info.v_validationLayers.size(); ++i) {
       create_info.v_layers.push_back(create_info.v_validationLayers[i]);
     }
@@ -231,6 +234,48 @@ int32_t create_instance(ApplicationData &app_data,
       return Errors::VULKAN_FAILED_TO_CREATE_INSTANCE;
     }
   }
+
+  return Errors::SUCCESS;
+}
+
+int32_t setup_debug_messenger(ApplicationData &app_data,
+                              DebugMessengerCreateInfo &create_info) {
+  VLOG_SCOPE_F(1, "Setting up Vulkan debug messenger");
+
+  // Check if instance is initialized
+  if (!app_data._instance) {
+    LOG_F(ERROR,
+          "Cannot create Vulkan message callback before creating VkInstance!");
+    return Errors::VULKAN_INSTANCE_NOT_INITIALIZED;
+  }
+
+  // Create create info
+  VkDebugUtilsMessengerCreateInfoEXT dbm_create_info{
+      .sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+      .messageSeverity = create_info._severity,
+      .messageType = create_info._types,
+      .pfnUserCallback = create_info.p_callback,
+      .pUserData = nullptr,
+  };
+
+  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
+  const char *func_str = "vkCreateDebugUtilsMessengerEXT";
+  auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
+      app_data._instance, func_str);
+  if (!func) {
+    LOG_F(ERROR, "Could not get function '%s'", func_str);
+    return Errors::VULKAN_FUNCTION_NOT_FOUND;
+  }
+
+  // Try to create debug messenger
+  if (auto ret = func(app_data._instance, &dbm_create_info,
+                      app_data.p_allocator, app_data.p_debugMessenger);
+      ret != VK_SUCCESS) {
+    LOG_F(ERROR, "Failed to set up Vulkan debug messenger!");
+    return Errors::VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER;
+  }
+
+  VLOG_F(1, "Set up Vulkan debug messenger successfully");
 
   return Errors::SUCCESS;
 }
