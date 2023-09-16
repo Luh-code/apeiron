@@ -116,7 +116,72 @@ int32_t create_instance(ApplicationData &app_data,
   instance_create_info.ppEnabledExtensionNames =
       create_info.v_extensions.data();
 
-  instance_create_info.enabledLayerCount = 0; // TODO: Add validation layers
+  // instance_create_info.enabledLayerCount = 0; // TODO: Add validation layers
+
+  // Add Validation layers to layers if requested
+  if (create_info.b_queryForExtensions) {
+    for (auto i = 0; i < create_info.v_validationLayers.size(); ++i) {
+      create_info.v_layers.push_back(create_info.v_validationLayers[i]);
+    }
+  }
+
+  // Check for doubles and layer availability
+  {
+    std::vector<const char *> final_layers{};
+
+    uint32_t layer_count;
+    vkEnumerateInstanceLayerProperties(&layer_count, nullptr);
+    std::vector<VkLayerProperties> layer_properties(layer_count);
+    vkEnumerateInstanceLayerProperties(&layer_count, layer_properties.data());
+    VLOG_F(2, "All [%d] Available instance layers:", layer_count);
+    for (auto i = 0; i < layer_count; ++i) {
+      VLOG_F(2, "\t%s", layer_properties[i].layerName);
+    }
+
+    for (auto i = 0; i < create_info.v_layers.size(); ++i) {
+      // Check for doubles
+      bool twice = false;
+      for (auto j = i + 1; j < create_info.v_layers.size(); ++j) {
+        if (strcmp(create_info.v_layers[i], create_info.v_layers[j]) == 0) {
+          twice = true;
+          break;
+        }
+      }
+      if (twice) {
+        LOG_F(WARNING, "Tried to add VkInstance layer '%s' twice",
+              create_info.v_layers[i]);
+        continue;
+      }
+
+      // Check for support
+      bool layer_exists = false;
+      for (auto j = 0; j < layer_properties.size(); ++j) {
+        if (strcmp(layer_properties[j].layerName, create_info.v_layers[i]) ==
+            0) {
+          layer_exists = true;
+          break;
+        }
+      }
+      if (!layer_exists) {
+        LOG_F(ERROR, "Unsupported layer '%s', continuing without",
+              create_info.v_layers[i]);
+        continue;
+      }
+      final_layers.push_back(create_info.v_layers[i]);
+    }
+    create_info.v_layers = final_layers;
+  }
+
+  // Log layers
+  {
+    LOG_F(2, "Selected [%lu] VkInstance layers: ", create_info.v_layers.size());
+    for (auto i = 0; i < create_info.v_layers.size(); ++i) {
+      LOG_F(2, "\t%s", create_info.v_layers[i]);
+    }
+  }
+
+  instance_create_info.enabledLayerCount = create_info.v_layers.size();
+  instance_create_info.ppEnabledLayerNames = create_info.v_layers.data();
 
   // Create instance
   {
