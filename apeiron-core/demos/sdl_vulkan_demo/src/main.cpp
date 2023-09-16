@@ -45,7 +45,6 @@ int main(int32_t argc, char *argv[]) {
 
   apeiron_core::window::WindowCreateInfo window_create_info{
       ._windowType = apeiron_core::window::WindowType::SDL,
-      // ._windowType = 4,
       .str_title = "SDL Vulkan window",
       ._posx = SDL_WINDOWPOS_CENTERED,
       ._posy = SDL_WINDOWPOS_CENTERED,
@@ -75,7 +74,7 @@ int main(int32_t argc, char *argv[]) {
   };
   apeiron_core::ApplicationData app_data{
       .p_allocator = nullptr,
-      .p_debugMessenger = new VkDebugUtilsMessengerEXT{}, // <-- WTF
+      // .p_debugMessenger = new VkDebugUtilsMessengerEXT{}, // <-- WTF
   };
   int32_t m = 0, c = 0;
   apeiron_core::AppBootstrap<apeiron_core::ApplicationCreateInfo *,
@@ -92,7 +91,6 @@ int main(int32_t argc, char *argv[]) {
           ._c = c,
           ._cr = app_data,
       };
-  apeiron_core::ApplicationCreateInfo *p = &create_info;
   if (auto ret = apeiron_core::run_app(app_bootstrap);
       ret != apeiron_core::Errors::SUCCESS) {
     LOG_F(ERROR, "An error occured whilst running app! (code: %d)", ret);

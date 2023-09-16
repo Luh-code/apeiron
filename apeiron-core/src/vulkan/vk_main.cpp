@@ -269,7 +269,7 @@ int32_t setup_debug_messenger(ApplicationData &app_data,
 
   // Try to create debug messenger
   if (auto ret = func(app_data._instance, &dbm_create_info,
-                      app_data.p_allocator, app_data.p_debugMessenger);
+                      app_data.p_allocator, &app_data._debugMessenger);
       ret != VK_SUCCESS) {
     LOG_F(ERROR, "Failed to set up Vulkan debug messenger!");
     return Errors::VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER;

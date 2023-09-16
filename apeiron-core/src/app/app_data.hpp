@@ -15,7 +15,7 @@ public:
 
   VkAllocationCallbacks *p_allocator;
   VkInstance _instance;
-  VkDebugUtilsMessengerEXT *p_debugMessenger;
+  VkDebugUtilsMessengerEXT _debugMessenger;
 };
 } // namespace apeiron_core
 
