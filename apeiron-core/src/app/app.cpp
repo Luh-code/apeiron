@@ -57,19 +57,20 @@ int32_t init_SDL_window(window::WindowCreateInfo *create_info,
   return Errors::SUCCESS;
 }
 
-int32_t init_vulkan(ApplicationData &app_data) {
-  vk::InstanceCreateInfo instance_create_info{
-      .str_applicationName = "SDL Vulkan Window",
-      ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
-      .v_extensions =
-          std::vector<const char *>{
-              "VK_KHR_surface",
-              "BLA_BLA_doesnt_exist",
-          },
-      .b_queryForExtensions = true,
-      .v_layers = std::vector<const char *>(0),
-  };
-  if (auto ret = vk::create_instance(app_data, instance_create_info);
+int32_t init_vulkan(vk::InstanceCreateInfo *instance_create_info,
+                    ApplicationData &app_data) {
+  // vk::InstanceCreateInfo instance_create_info{
+  //     .str_applicationName = "SDL Vulkan Window",
+  //     ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
+  //     .v_extensions =
+  //         std::vector<const char *>{
+  //             "VK_KHR_surface",
+  //             "BLA_BLA_doesnt_exist",
+  //         },
+  //     .b_queryForExtensions = true,
+  //     .v_layers = std::vector<const char *>(0),
+  // };
+  if (auto ret = vk::create_instance(app_data, *instance_create_info);
       ret != Errors::SUCCESS) {
     return ret;
   }
@@ -86,7 +87,8 @@ int32_t normal_init(ApplicationCreateInfo *create_info,
       ret != Errors::SUCCESS) {
     return ret;
   }
-  if (auto ret = init_vulkan(app_data); ret != Errors::SUCCESS) {
+  if (auto ret = init_vulkan(create_info->p_instanceCreateInfo, app_data);
+      ret != Errors::SUCCESS) {
     return ret;
   }
   return Errors::SUCCESS;

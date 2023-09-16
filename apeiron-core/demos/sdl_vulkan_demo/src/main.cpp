@@ -5,6 +5,8 @@
 #include <limits.h>
 #include <loguru.hpp>
 #include <valarray>
+#include <vector>
+#include <vulkan/vulkan_core.h>
 
 int32_t main_loop(int32_t test, apeiron_core::ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Main Loop");
@@ -50,8 +52,16 @@ int main(int32_t argc, char *argv[]) {
       ._sizex = 800,
       ._sizey = 600,
   };
+  apeiron_core::vk::InstanceCreateInfo instance_create_info{
+      .str_applicationName = "SDL Vulkan Window",
+      ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
+      .v_extensions = std::vector<const char *>(0),
+      .b_queryForExtensions = true,
+      .v_layers = std::vector<const char *>(0),
+  };
   apeiron_core::ApplicationCreateInfo create_info{
       .p_windowCreateInfo = &window_create_info,
+      .p_instanceCreateInfo = &instance_create_info,
   };
   apeiron_core::ApplicationData app_data{
 

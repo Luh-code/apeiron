@@ -1,7 +1,4 @@
 #include "vk_main.hpp"
-#include <algorithm>
-#include <vector>
-#include <vulkan/vulkan_core.h>
 // #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core::vk {
@@ -62,8 +59,6 @@ int32_t create_instance(ApplicationData &app_data,
   }
 
   // Add queried extensions to v_extensions
-  // extension_count += create_info.v_extensions.size();
-
   for (auto i = 0; i < extension_count; ++i) {
     create_info.v_extensions.push_back(extensions[i]);
   }
@@ -73,15 +68,7 @@ int32_t create_instance(ApplicationData &app_data,
   {
     std::vector<const char *> final_extensions{};
     for (auto i = 0; i < create_info.v_extensions.size(); ++i) {
-      // if (i < create_info.v_extensions.size() - 1 &&
-      //     std::find(std::next(create_info.v_extensions.begin(), i + 1),
-      //               create_info.v_extensions.end(),
-      //               create_info.v_extensions[i]) !=
-      //         create_info.v_extensions.end()) {
-      //   LOG_F(WARNING, "Tried to add VkInstance extension '%s' twice",
-      //         extensions[i]);
-      //   continue;
-      // }
+      // Check for doubles
       bool twice = false;
       for (auto j = i + 1; j < create_info.v_extensions.size(); ++j) {
         if (strcmp(create_info.v_extensions[i], create_info.v_extensions[j]) ==
@@ -96,6 +83,7 @@ int32_t create_instance(ApplicationData &app_data,
         continue;
       }
 
+      // Check for support
       bool extension_exists = false;
       for (auto j = 0; j < extension_properties.size(); ++j) {
         if (strcmp(extension_properties[j].extensionName,
