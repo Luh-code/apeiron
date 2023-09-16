@@ -16,28 +16,6 @@
 
 namespace apeiron_core::vk {
 
-struct InstanceCreateInfo {
-public:
-  const char *str_applicationName;
-  uint32_t _version;
-
-  std::vector<const char *> v_extensions;
-  bool b_queryForExtensions;
-
-  std::vector<const char *> v_layers;
-  bool b_enableValidationLayers =
-#ifdef NDEBUG
-      false
-#else
-      true
-#endif // NDEBUG
-      ;
-  std::vector<const char *> v_validationLayers = {
-      "VK_LAYER_KHRONOS_validation",
-  };
-};
-[[nodiscard]] int32_t create_instance(ApplicationData &app_data,
-                                      InstanceCreateInfo &create_info);
 static inline VKAPI_ATTR VkBool32 VKAPI_CALL
 debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT message_severity,
                VkDebugUtilsMessageTypeFlagsEXT message_type,
@@ -85,15 +63,45 @@ debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT message_severity,
 struct DebugMessengerCreateInfo {
   VkDebugUtilsMessageSeverityFlagsEXT _severity;
   VkDebugUtilsMessageTypeFlagsEXT _types;
-  // VKAPI_ATTR VkBool32 VKAPI_CALL (*p_callback)(
-  //     VkDebugUtilsMessageSeverityFlagsEXT,
-  //     VkDebugUtilsMessageTypeFlagBitsEXT, const
-  //     VkDebugUtilsMessengerCallbackDataEXT *, void *);
   PFN_vkDebugUtilsMessengerCallbackEXT p_callback;
 };
+void populate_debug_vk_messenger_create_info(
+    VkDebugUtilsMessengerCreateInfoEXT &out, DebugMessengerCreateInfo &in);
+VkResult create_debug_utils_messenger_ext(
+    VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *create_info,
+    const VkAllocationCallbacks *allocator,
+    VkDebugUtilsMessengerEXT *debug_messenger);
+void destroy_debug_utils_messenger_ext(VkInstance instance,
+                                       VkDebugUtilsMessengerEXT debug_messenger,
+                                       const VkAllocationCallbacks *allocator);
 [[nodiscard]] int32_t
 setup_debug_messenger(ApplicationData &app_data,
                       DebugMessengerCreateInfo &create_info);
+
+struct InstanceCreateInfo {
+public:
+  const char *str_applicationName;
+  uint32_t _version;
+
+  std::vector<const char *> v_extensions;
+  bool b_queryForExtensions;
+
+  std::vector<const char *> v_layers;
+  bool b_enableValidationLayers =
+#ifdef NDEBUG
+      false
+#else
+      true
+#endif // NDEBUG
+      ;
+  std::vector<const char *> v_validationLayers = {
+      "VK_LAYER_KHRONOS_validation",
+  };
+
+  DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
+};
+[[nodiscard]] int32_t create_instance(ApplicationData &app_data,
+                                      InstanceCreateInfo &create_info);
 } // namespace apeiron_core::vk
 
 #endif // __VK_MAIN_HPP__

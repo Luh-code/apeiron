@@ -65,8 +65,12 @@ int32_t create_instance(ApplicationData &app_data,
   }
   delete[] extensions;
 
+  VkDebugUtilsMessengerCreateInfoEXT messenger_create_info;
   if (create_info.b_enableValidationLayers) {
     create_info.v_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    populate_debug_vk_messenger_create_info(
+        messenger_create_info, *create_info.p_debugMessengerCreateInfo);
+    instance_create_info.pNext = &messenger_create_info;
   }
 
   // Check for doubles and extension availability
@@ -238,6 +242,52 @@ int32_t create_instance(ApplicationData &app_data,
   return Errors::SUCCESS;
 }
 
+void populate_debug_vk_messenger_create_info(
+    VkDebugUtilsMessengerCreateInfoEXT &out, DebugMessengerCreateInfo &in) {
+  out = {
+      .sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+      .messageSeverity = in._severity,
+      .messageType = in._types,
+      .pfnUserCallback = in.p_callback,
+      .pUserData = nullptr,
+  };
+}
+
+VkResult create_debug_utils_messenger_ext(
+    VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *create_info,
+    const VkAllocationCallbacks *allocator,
+    VkDebugUtilsMessengerEXT *debug_messenger) {
+
+  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
+  const char *func_str = "vkCreateDebugUtilsMessengerEXT";
+  auto func = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(
+      vkGetInstanceProcAddr(instance, func_str));
+  if (!func) {
+    LOG_F(ERROR, "Could not get function '%s'", func_str);
+    return VK_ERROR_EXTENSION_NOT_PRESENT;
+  }
+
+  // Run the fetched function
+  return func(instance, create_info, allocator, debug_messenger);
+}
+
+void destroy_debug_utils_messenger_ext(VkInstance instance,
+                                       VkDebugUtilsMessengerEXT debug_messenger,
+                                       const VkAllocationCallbacks *allocator) {
+
+  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
+  const char *func_str = "vkDestroyDebugUtilsMessengerEXT";
+  auto func = reinterpret_cast<PFN_vkDestroyDebugUtilsMessengerEXT>(
+      vkGetInstanceProcAddr(instance, func_str));
+  if (!func) {
+    LOG_F(ERROR, "Could not get function '%s'", func_str);
+    return;
+  }
+
+  // Run the fetched function
+  func(instance, debug_messenger, allocator);
+}
+
 int32_t setup_debug_messenger(ApplicationData &app_data,
                               DebugMessengerCreateInfo &create_info) {
   VLOG_SCOPE_F(1, "Setting up Vulkan debug messenger");
@@ -250,26 +300,13 @@ int32_t setup_debug_messenger(ApplicationData &app_data,
   }
 
   // Create create info
-  VkDebugUtilsMessengerCreateInfoEXT dbm_create_info{
-      .sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
-      .messageSeverity = create_info._severity,
-      .messageType = create_info._types,
-      .pfnUserCallback = create_info.p_callback,
-      .pUserData = nullptr,
-  };
-
-  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
-  const char *func_str = "vkCreateDebugUtilsMessengerEXT";
-  auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
-      app_data._instance, func_str);
-  if (!func) {
-    LOG_F(ERROR, "Could not get function '%s'", func_str);
-    return Errors::VULKAN_FUNCTION_NOT_FOUND;
-  }
+  VkDebugUtilsMessengerCreateInfoEXT dbm_create_info;
+  populate_debug_vk_messenger_create_info(dbm_create_info, create_info);
 
   // Try to create debug messenger
-  if (auto ret = func(app_data._instance, &dbm_create_info,
-                      app_data.p_allocator, &app_data._debugMessenger);
+  if (auto ret = create_debug_utils_messenger_ext(
+          app_data._instance, &dbm_create_info, app_data.p_allocator,
+          &app_data._debugMessenger);
       ret != VK_SUCCESS) {
     LOG_F(ERROR, "Failed to set up Vulkan debug messenger!");
     return Errors::VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER;

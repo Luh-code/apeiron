@@ -93,6 +93,12 @@ int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
 
   // Clean up Vulkan
   VLOG_F(1, "Cleaning up Vulkan");
+  // Clean up Debug messenger
+  if (app_data._debugMessenger) {
+    vk::destroy_debug_utils_messenger_ext(
+        app_data._instance, app_data._debugMessenger, app_data.p_allocator);
+    VLOG_F(2, "Cleaned up VkDebugUtilsMessengerEXT");
+  }
   // Clean up Instance
   if (app_data._instance) {
     vkDestroyInstance(app_data._instance, nullptr);

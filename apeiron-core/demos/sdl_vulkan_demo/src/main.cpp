@@ -10,7 +10,7 @@
 
 int32_t main_loop(int32_t test, apeiron_core::ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Main Loop");
-  bool running = true;
+  bool running = false; // normally true, false for testing
   while (running == true) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -51,13 +51,6 @@ int main(int32_t argc, char *argv[]) {
       ._sizex = 800,
       ._sizey = 600,
   };
-  apeiron_core::vk::InstanceCreateInfo instance_create_info{
-      .str_applicationName = "SDL Vulkan Window",
-      ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
-      .v_extensions = std::vector<const char *>(0),
-      .b_queryForExtensions = true,
-      .v_layers = std::vector<const char *>(0),
-  };
   apeiron_core::vk::DebugMessengerCreateInfo debug_messenger_create_info{
       ._severity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
                    VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
@@ -67,6 +60,14 @@ int main(int32_t argc, char *argv[]) {
                 VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT,
       .p_callback = apeiron_core::vk::debug_callback,
   };
+  apeiron_core::vk::InstanceCreateInfo instance_create_info{
+      .str_applicationName = "SDL Vulkan Window",
+      ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
+      .v_extensions = std::vector<const char *>(0),
+      .b_queryForExtensions = true,
+      .v_layers = std::vector<const char *>(0),
+      .p_debugMessengerCreateInfo = &debug_messenger_create_info,
+  };
   apeiron_core::ApplicationCreateInfo create_info{
       .p_windowCreateInfo = &window_create_info,
       .p_instanceCreateInfo = &instance_create_info,
@@ -74,7 +75,6 @@ int main(int32_t argc, char *argv[]) {
   };
   apeiron_core::ApplicationData app_data{
       .p_allocator = nullptr,
-      // .p_debugMessenger = new VkDebugUtilsMessengerEXT{}, // <-- WTF
   };
   int32_t m = 0, c = 0;
   apeiron_core::AppBootstrap<apeiron_core::ApplicationCreateInfo *,
