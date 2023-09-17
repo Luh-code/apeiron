@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <map>
+#include <optional>
 #include <string>
 
 #include <vulkan/vk_platform.h>
@@ -104,6 +105,11 @@ public:
 [[nodiscard]] ap_error create_instance(ApplicationData &app_data,
                                        InstanceCreateInfo &create_info);
 
+struct QueueFamilyIndices {
+public:
+  std::optional<uint32_t> _graphicsFamily;
+};
+void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices *indices);
 struct PhysicalDeviceSelectionInfo {
 public:
   int32_t _discreteness = 1000;

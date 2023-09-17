@@ -1,10 +1,5 @@
 #include "vk_main.hpp"
-#include <cstdint>
-#include <map>
-#include <utility>
-#include <vector>
 #include <vulkan/vulkan_core.h>
-// #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core::vk {
 void populate_debug_vk_messenger_create_info(
@@ -343,6 +338,23 @@ int32_t rate_device_suitability(VkPhysicalDevice device,
            scoring._imageSizeImportance;
 
   return score;
+}
+
+void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices *indices) {
+  indices = {};
+
+  uint32_t queue_family_count = 0;
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count,
+                                           nullptr);
+
+  std::vector<VkQueueFamilyProperties> queue_families(queue_family_count);
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count,
+                                           queue_families.data());
+
+  for (int32_t i = 0; i < queue_family_count; ++i) {
+    const auto &queue_family = queue_families[i];
+    if (queue_family.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+  }
 }
 
 ap_error select_physical_device(ApplicationData &app_data,
