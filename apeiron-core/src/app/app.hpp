@@ -16,15 +16,16 @@ public:
   window::WindowCreateInfo *p_windowCreateInfo;
   vk::InstanceCreateInfo *p_instanceCreateInfo;
   vk::DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
+  vk::PhysicalDeviceSelectionInfo *p_physicalDeviceSelectionInfo;
 };
 
 template <typename I, typename IR, typename M, typename MR, typename C,
           typename CR>
 struct App {
 public:
-  int32_t (*p_init)(I, IR);
-  int32_t (*p_main_loop)(M, MR);
-  int32_t (*p_cleanup)(C, CR);
+  ap_error (*p_init)(I, IR);
+  ap_error (*p_main_loop)(M, MR);
+  ap_error (*p_cleanup)(C, CR);
 };
 template <typename I, typename IR, typename M, typename MR, typename C,
           typename CR>
@@ -41,10 +42,10 @@ public:
 };
 template <typename I, typename IR, typename M, typename MR, typename C,
           typename CR>
-[[nodiscard]] inline int32_t
+[[nodiscard]] inline ap_error
 run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
   LOG_SCOPE_F(INFO, "Running App");
-  int32_t ret;
+  ap_error ret;
   if (ret = appBootstrap.p_app->p_init(appBootstrap._i, appBootstrap._ir);
       ret < Errors::SUCCESS) {
     return ret;
@@ -60,18 +61,18 @@ run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
   return ret;
 }
 
-[[nodiscard]] int32_t init_window(window::WindowCreateInfo *create_info,
-                                  ApplicationData &app_data);
-[[nodiscard]] int32_t init_SDL_window(window::WindowCreateInfo *create_info,
-                                      ApplicationData &app_data);
-[[nodiscard]] int32_t
+[[nodiscard]] ap_error init_window(window::WindowCreateInfo *create_info,
+                                   ApplicationData &app_data);
+[[nodiscard]] ap_error init_SDL_window(window::WindowCreateInfo *create_info,
+                                       ApplicationData &app_data);
+[[nodiscard]] ap_error
 init_GLFW_window(window::WindowCreateInfo *create_info,
                  ApplicationData &app_data); // TODO: implement <--
-[[nodiscard]] int32_t init_vulkan(ApplicationCreateInfo *create_info,
-                                  ApplicationData &app_data);
-[[nodiscard]] int32_t normal_init(ApplicationCreateInfo *create_info,
-                                  ApplicationData &app_data);
-[[nodiscard]] int32_t headless_init(int32_t); // TODO: implement <--
-[[nodiscard]] int32_t normal_cleanup(int32_t, ApplicationData &app_data);
+[[nodiscard]] ap_error init_vulkan(ApplicationCreateInfo *create_info,
+                                   ApplicationData &app_data);
+[[nodiscard]] ap_error normal_init(ApplicationCreateInfo *create_info,
+                                   ApplicationData &app_data);
+[[nodiscard]] ap_error headless_init(int32_t); // TODO: implement <--
+[[nodiscard]] ap_error normal_cleanup(int32_t, ApplicationData &app_data);
 } // namespace apeiron_core
 #endif // !__APP_HPP__

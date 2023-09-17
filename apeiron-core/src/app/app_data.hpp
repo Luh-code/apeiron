@@ -4,6 +4,7 @@
 #include <SDL2/SDL_video.h>
 #include <cstdint>
 #include <vulkan/vulkan.h>
+#include <vulkan/vulkan_core.h>
 
 namespace apeiron_core {
 
@@ -14,8 +15,10 @@ public:
   SDL_Surface *p_SDLSurface;
 
   VkAllocationCallbacks *p_allocator;
-  VkInstance _instance;
-  VkDebugUtilsMessengerEXT _debugMessenger;
+  VkInstance _instance = VK_NULL_HANDLE;
+  VkDebugUtilsMessengerEXT _debugMessenger = VK_NULL_HANDLE;
+
+  VkPhysicalDevice _physicalDevice = VK_NULL_HANDLE;
 };
 } // namespace apeiron_core
 

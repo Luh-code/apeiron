@@ -4,12 +4,13 @@
 #include <cstdint>
 
 namespace apeiron_core {
+typedef int32_t ap_error;
 /*
  * >0 = Warning
  * 0 = Positive
  * <0 = Error
  */
-enum Errors : int32_t {
+enum Errors : ap_error {
   // Vulkan Warnings (9000, 10999)
   VULKAN_WARNING = 9000,
   // GLFW Warnings (8000, 8999)
@@ -45,6 +46,7 @@ enum Errors : int32_t {
   VULKAN_FAILED_TO_CREATE_INSTANCE = -9001,
   VULKAN_INSTANCE_NOT_INITIALIZED = -9002,
   VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER = -9003,
+  VULKAN_GPU_NOT_SUPPORTED = -9004,
 };
 } // namespace apeiron_core
 
