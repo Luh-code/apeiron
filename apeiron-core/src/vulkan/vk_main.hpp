@@ -6,6 +6,7 @@
 #include "../window/window.hpp"
 
 #include <cstdint>
+#include <map>
 #include <string>
 
 #include <vulkan/vk_platform.h>
@@ -74,7 +75,7 @@ VkResult create_debug_utils_messenger_ext(
 void destroy_debug_utils_messenger_ext(VkInstance instance,
                                        VkDebugUtilsMessengerEXT debug_messenger,
                                        const VkAllocationCallbacks *allocator);
-[[nodiscard]] int32_t
+[[nodiscard]] ap_error
 setup_debug_messenger(ApplicationData &app_data,
                       DebugMessengerCreateInfo &create_info);
 
@@ -100,8 +101,20 @@ public:
 
   DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
 };
-[[nodiscard]] int32_t create_instance(ApplicationData &app_data,
-                                      InstanceCreateInfo &create_info);
+[[nodiscard]] ap_error create_instance(ApplicationData &app_data,
+                                       InstanceCreateInfo &create_info);
+
+struct PhysicalDeviceSelectionInfo {
+public:
+  int32_t _discreteness = 1000;
+  float_t _imageSizeImportance = 1.0f;
+};
+[[nodiscard]] int32_t
+rate_device_suitability(VkPhysicalDevice device,
+                        PhysicalDeviceSelectionInfo &scoring);
+[[nodiscard]] ap_error
+select_physical_device(ApplicationData &app_data,
+                       PhysicalDeviceSelectionInfo &selection_info);
 } // namespace apeiron_core::vk
 
 #endif // __VK_MAIN_HPP__

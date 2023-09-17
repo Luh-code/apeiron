@@ -1,10 +1,89 @@
 #include "vk_main.hpp"
+#include <cstdint>
+#include <map>
+#include <utility>
+#include <vector>
 #include <vulkan/vulkan_core.h>
 // #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core::vk {
-int32_t create_instance(ApplicationData &app_data,
-                        InstanceCreateInfo &create_info) {
+void populate_debug_vk_messenger_create_info(
+    VkDebugUtilsMessengerCreateInfoEXT &out, DebugMessengerCreateInfo &in) {
+  out = {
+      .sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+      .messageSeverity = in._severity,
+      .messageType = in._types,
+      .pfnUserCallback = in.p_callback,
+      .pUserData = nullptr,
+  };
+}
+
+VkResult create_debug_utils_messenger_ext(
+    VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *create_info,
+    const VkAllocationCallbacks *allocator,
+    VkDebugUtilsMessengerEXT *debug_messenger) {
+
+  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
+  const char *func_str = "vkCreateDebugUtilsMessengerEXT";
+  auto func = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(
+      vkGetInstanceProcAddr(instance, func_str));
+  if (!func) {
+    LOG_F(ERROR, "Could not get function '%s'", func_str);
+    return VK_ERROR_EXTENSION_NOT_PRESENT;
+  }
+
+  // Run the fetched function
+  return func(instance, create_info, allocator, debug_messenger);
+}
+
+void destroy_debug_utils_messenger_ext(VkInstance instance,
+                                       VkDebugUtilsMessengerEXT debug_messenger,
+                                       const VkAllocationCallbacks *allocator) {
+
+  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
+  const char *func_str = "vkDestroyDebugUtilsMessengerEXT";
+  auto func = reinterpret_cast<PFN_vkDestroyDebugUtilsMessengerEXT>(
+      vkGetInstanceProcAddr(instance, func_str));
+  if (!func) {
+    LOG_F(ERROR, "Could not get function '%s'", func_str);
+    return;
+  }
+
+  // Run the fetched function
+  func(instance, debug_messenger, allocator);
+}
+
+ap_error setup_debug_messenger(ApplicationData &app_data,
+                               DebugMessengerCreateInfo &create_info) {
+  VLOG_SCOPE_F(1, "Setting up Vulkan debug messenger");
+
+  // Check if instance is initialized
+  if (!app_data._instance) {
+    LOG_F(ERROR,
+          "Cannot create Vulkan message callback before creating VkInstance!");
+    return Errors::VULKAN_INSTANCE_NOT_INITIALIZED;
+  }
+
+  // Create create info
+  VkDebugUtilsMessengerCreateInfoEXT dbm_create_info;
+  populate_debug_vk_messenger_create_info(dbm_create_info, create_info);
+
+  // Try to create debug messenger
+  if (auto ret = create_debug_utils_messenger_ext(
+          app_data._instance, &dbm_create_info, app_data.p_allocator,
+          &app_data._debugMessenger);
+      ret != VK_SUCCESS) {
+    LOG_F(ERROR, "Failed to set up Vulkan debug messenger!");
+    return Errors::VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER;
+  }
+
+  VLOG_F(1, "Set up Vulkan debug messenger successfully");
+
+  return Errors::SUCCESS;
+}
+
+ap_error create_instance(ApplicationData &app_data,
+                         InstanceCreateInfo &create_info) {
   VLOG_SCOPE_F(1, "Creating Vulkan Instance");
   // Setup VkApplicationInfo and VkInstanceCreateInfo
   VkApplicationInfo app_info{
@@ -242,77 +321,99 @@ int32_t create_instance(ApplicationData &app_data,
   return Errors::SUCCESS;
 }
 
-void populate_debug_vk_messenger_create_info(
-    VkDebugUtilsMessengerCreateInfoEXT &out, DebugMessengerCreateInfo &in) {
-  out = {
-      .sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
-      .messageSeverity = in._severity,
-      .messageType = in._types,
-      .pfnUserCallback = in.p_callback,
-      .pUserData = nullptr,
-  };
+int32_t rate_device_suitability(VkPhysicalDevice device,
+                                PhysicalDeviceSelectionInfo &scoring) {
+  VkPhysicalDeviceProperties device_properties;
+  VkPhysicalDeviceFeatures device_features;
+  vkGetPhysicalDeviceProperties(device, &device_properties);
+  vkGetPhysicalDeviceFeatures(device, &device_features);
+
+  int32_t score = 0;
+
+  // Check for required functionality
+  if (!device_features.geometryShader) {
+    return score;
+  }
+
+  if (device_properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
+    score += scoring._discreteness;
+  }
+
+  score += device_properties.limits.maxImageDimension2D *
+           scoring._imageSizeImportance;
+
+  return score;
 }
 
-VkResult create_debug_utils_messenger_ext(
-    VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *create_info,
-    const VkAllocationCallbacks *allocator,
-    VkDebugUtilsMessengerEXT *debug_messenger) {
+ap_error select_physical_device(ApplicationData &app_data,
+                                PhysicalDeviceSelectionInfo &selection_info) {
+  VLOG_SCOPE_F(1, "Selecting physical device");
+  // Get a list of all GPUs supporting Vulkan
+  uint32_t device_count = 0;
+  vkEnumeratePhysicalDevices(app_data._instance, &device_count, nullptr);
 
-  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
-  const char *func_str = "vkCreateDebugUtilsMessengerEXT";
-  auto func = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(
-      vkGetInstanceProcAddr(instance, func_str));
-  if (!func) {
-    LOG_F(ERROR, "Could not get function '%s'", func_str);
-    return VK_ERROR_EXTENSION_NOT_PRESENT;
+  if (device_count == 0) {
+    LOG_F(ERROR, "Failed to find GPUs with Vulkan support!");
+    return Errors::VULKAN_GPU_NOT_SUPPORTED;
   }
 
-  // Run the fetched function
-  return func(instance, create_info, allocator, debug_messenger);
-}
+  std::vector<VkPhysicalDevice> devices(device_count);
+  vkEnumeratePhysicalDevices(app_data._instance, &device_count, devices.data());
 
-void destroy_debug_utils_messenger_ext(VkInstance instance,
-                                       VkDebugUtilsMessengerEXT debug_messenger,
-                                       const VkAllocationCallbacks *allocator) {
+  // Rank Devices
+  std::multimap<int32_t, VkPhysicalDevice> candidates;
 
-  // Fetch function pointer to vkCreateDebugUtilsMessengerEXT
-  const char *func_str = "vkDestroyDebugUtilsMessengerEXT";
-  auto func = reinterpret_cast<PFN_vkDestroyDebugUtilsMessengerEXT>(
-      vkGetInstanceProcAddr(instance, func_str));
-  if (!func) {
-    LOG_F(ERROR, "Could not get function '%s'", func_str);
-    return;
+  for (const auto &device : devices) {
+    int32_t score = rate_device_suitability(device, selection_info);
+    candidates.insert(std::make_pair(score, device));
   }
 
-  // Run the fetched function
-  func(instance, debug_messenger, allocator);
-}
-
-int32_t setup_debug_messenger(ApplicationData &app_data,
-                              DebugMessengerCreateInfo &create_info) {
-  VLOG_SCOPE_F(1, "Setting up Vulkan debug messenger");
-
-  // Check if instance is initialized
-  if (!app_data._instance) {
-    LOG_F(ERROR,
-          "Cannot create Vulkan message callback before creating VkInstance!");
-    return Errors::VULKAN_INSTANCE_NOT_INITIALIZED;
+  // Log Devices with ranks
+  VLOG_F(2, "Found [%ld] devices:", candidates.size());
+  for (const auto &p : candidates) {
+    VkPhysicalDeviceProperties device_properties;
+    vkGetPhysicalDeviceProperties(p.second, &device_properties);
+    VLOG_F(2, "\t%s", device_properties.deviceName);
+    VLOG_F(2, "\t - device_id: %u", device_properties.deviceID);
+    VLOG_F(2, "\t - vendor_id: %u", device_properties.vendorID);
+    VLOG_F(2, "\t - api_ver: %u", device_properties.apiVersion);
+    const char *type_str;
+    switch (device_properties.deviceType) {
+    case VK_PHYSICAL_DEVICE_TYPE_CPU:
+      type_str = "VK_PHYSICAL_DEVICE_TYPE_CPU";
+      break;
+    case VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU:
+      type_str = "VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU";
+      break;
+    case VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU:
+      type_str = "VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU";
+      break;
+    case VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU:
+      type_str = "VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU";
+      break;
+    case VK_PHYSICAL_DEVICE_TYPE_OTHER:
+      type_str = "VK_PHYSICAL_DEVICE_TYPE_OTHER";
+      break;
+    default:
+      type_str = "unknown";
+      break;
+    }
+    VLOG_F(2, "\t - type: %s", type_str);
+    VLOG_F(2, "\t - driver_ver: %u", device_properties.driverVersion);
+    VLOG_F(2, "\tSCORE=%d", p.first);
   }
 
-  // Create create info
-  VkDebugUtilsMessengerCreateInfoEXT dbm_create_info;
-  populate_debug_vk_messenger_create_info(dbm_create_info, create_info);
-
-  // Try to create debug messenger
-  if (auto ret = create_debug_utils_messenger_ext(
-          app_data._instance, &dbm_create_info, app_data.p_allocator,
-          &app_data._debugMessenger);
-      ret != VK_SUCCESS) {
-    LOG_F(ERROR, "Failed to set up Vulkan debug messenger!");
-    return Errors::VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER;
+  // Set physical device if a suitable candidate was found
+  if (candidates.rbegin()->first <= 0) {
+    LOG_F(ERROR, "Failed to find GPU with required features!");
+    return Errors::VULKAN_GPU_NOT_SUPPORTED;
   }
+  VkPhysicalDeviceProperties device_properties;
+  vkGetPhysicalDeviceProperties(candidates.rbegin()->second,
+                                &device_properties);
+  LOG_F(INFO, "Selected '%s'", device_properties.deviceName);
 
-  VLOG_F(1, "Set up Vulkan debug messenger successfully");
+  app_data._physicalDevice = candidates.rbegin()->second;
 
   return Errors::SUCCESS;
 }

@@ -68,10 +68,14 @@ int main(int32_t argc, char *argv[]) {
       .v_layers = std::vector<const char *>(0),
       .p_debugMessengerCreateInfo = &debug_messenger_create_info,
   };
+  apeiron_core::vk::PhysicalDeviceSelectionInfo physical_device_selection_info{
+
+  };
   apeiron_core::ApplicationCreateInfo create_info{
       .p_windowCreateInfo = &window_create_info,
       .p_instanceCreateInfo = &instance_create_info,
       .p_debugMessengerCreateInfo = &debug_messenger_create_info,
+      .p_physicalDeviceSelectionInfo = &physical_device_selection_info,
   };
   apeiron_core::ApplicationData app_data{
       .p_allocator = nullptr,

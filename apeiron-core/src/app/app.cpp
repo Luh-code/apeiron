@@ -2,8 +2,8 @@
 #include <vector>
 
 namespace apeiron_core {
-int32_t init_window(window::WindowCreateInfo *create_info,
-                    ApplicationData &app_data) {
+ap_error init_window(window::WindowCreateInfo *create_info,
+                     ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Initializing window");
   // Create window according to _windowType of create_info
   app_data._windowType = create_info->_windowType;
@@ -31,8 +31,8 @@ int32_t init_window(window::WindowCreateInfo *create_info,
   return Errors::SUCCESS;
 }
 
-int32_t init_SDL_window(window::WindowCreateInfo *create_info,
-                        ApplicationData &app_data) {
+ap_error init_SDL_window(window::WindowCreateInfo *create_info,
+                         ApplicationData &app_data) {
   if (auto ret = window::sdl_initialized(0); !ret) {
     LOG_F(ERROR, "SDL is not initialized!");
     return Errors::SDL_NOT_INITIALIZED;
@@ -55,25 +55,30 @@ int32_t init_SDL_window(window::WindowCreateInfo *create_info,
   return Errors::SUCCESS;
 }
 
-int32_t init_vulkan(ApplicationCreateInfo *create_info,
-                    ApplicationData &app_data) {
+ap_error init_vulkan(ApplicationCreateInfo *create_info,
+                     ApplicationData &app_data) {
   if (auto ret =
           vk::create_instance(app_data, *create_info->p_instanceCreateInfo);
-      ret != Errors::SUCCESS) {
+      ret < Errors::SUCCESS) {
     return ret;
   }
   if (create_info->p_instanceCreateInfo->b_enableValidationLayers) {
     if (auto ret = vk::setup_debug_messenger(
             app_data, *create_info->p_debugMessengerCreateInfo);
-        ret != Errors::SUCCESS) {
+        ret < Errors::SUCCESS) {
       return ret;
     }
+  }
+  if (auto ret = vk::select_physical_device(
+          app_data, *create_info->p_physicalDeviceSelectionInfo);
+      ret < Errors::SUCCESS) {
+    return ret;
   }
   return Errors::SUCCESS;
 }
 
-int32_t normal_init(ApplicationCreateInfo *create_info,
-                    ApplicationData &app_data) {
+ap_error normal_init(ApplicationCreateInfo *create_info,
+                     ApplicationData &app_data) {
   if (!create_info->p_windowCreateInfo) {
     LOG_F(ERROR, "p_windowCreateInfo is not defined!");
     return Errors::WINDOW_CREATE_INFO_NOT_DEFINED;
@@ -88,7 +93,7 @@ int32_t normal_init(ApplicationCreateInfo *create_info,
   return Errors::SUCCESS;
 }
 
-int32_t normal_cleanup(int32_t, ApplicationData &app_data) {
+ap_error normal_cleanup(int32_t, ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Cleaning up application");
 
   // Clean up Vulkan
