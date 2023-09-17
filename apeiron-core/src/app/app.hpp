@@ -14,6 +14,8 @@ namespace apeiron_core {
 struct ApplicationCreateInfo {
 public:
   window::WindowCreateInfo *p_windowCreateInfo;
+  vk::InstanceCreateInfo *p_instanceCreateInfo;
+  vk::DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
 };
 
 template <typename I, typename IR, typename M, typename MR, typename C,
@@ -39,7 +41,8 @@ public:
 };
 template <typename I, typename IR, typename M, typename MR, typename C,
           typename CR>
-inline int32_t run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
+[[nodiscard]] inline int32_t
+run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
   LOG_SCOPE_F(INFO, "Running App");
   int32_t ret;
   if (ret = appBootstrap.p_app->p_init(appBootstrap._i, appBootstrap._ir);
@@ -57,16 +60,18 @@ inline int32_t run_app(AppBootstrap<I, IR, M, MR, C, CR> &appBootstrap) {
   return ret;
 }
 
-int32_t init_window(window::WindowCreateInfo *create_info,
-                    ApplicationData &app_data);
-int32_t init_SDL_window(window::WindowCreateInfo *create_info,
-                        ApplicationData &app_data);
-int32_t init_GLFW_window(window::WindowCreateInfo *create_info,
-                         ApplicationData &app_data); // TODO: implement <--
-int32_t init_vulkan(ApplicationData &app_data);
-int32_t normal_init(ApplicationCreateInfo *create_info,
-                    ApplicationData &app_data);
-int32_t headless_init(int32_t); // TODO: implement <--
-int32_t normal_cleanup(int32_t, ApplicationData &app_data);
+[[nodiscard]] int32_t init_window(window::WindowCreateInfo *create_info,
+                                  ApplicationData &app_data);
+[[nodiscard]] int32_t init_SDL_window(window::WindowCreateInfo *create_info,
+                                      ApplicationData &app_data);
+[[nodiscard]] int32_t
+init_GLFW_window(window::WindowCreateInfo *create_info,
+                 ApplicationData &app_data); // TODO: implement <--
+[[nodiscard]] int32_t init_vulkan(ApplicationCreateInfo *create_info,
+                                  ApplicationData &app_data);
+[[nodiscard]] int32_t normal_init(ApplicationCreateInfo *create_info,
+                                  ApplicationData &app_data);
+[[nodiscard]] int32_t headless_init(int32_t); // TODO: implement <--
+[[nodiscard]] int32_t normal_cleanup(int32_t, ApplicationData &app_data);
 } // namespace apeiron_core
 #endif // !__APP_HPP__

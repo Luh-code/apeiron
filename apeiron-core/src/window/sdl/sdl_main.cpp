@@ -23,7 +23,7 @@ bool sdl_initialized(int32_t flags) {
 }
 
 int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info) {
-  VLOG_F(3, "Creating SDL_Window '%s' of size %dx%d", create_info.str_title,
+  VLOG_F(2, "Creating SDL_Window '%s' of size %dx%d", create_info.str_title,
          create_info._sizex, create_info._sizey);
 
   window = SDL_CreateWindow(
@@ -35,6 +35,7 @@ int32_t sdl_create_window(SDL_Window *&window, WindowCreateInfo &create_info) {
     return apeiron_core::Errors::SDL_FAILED_WINDOW_CREATION;
   }
 
+  VLOG_F(2, "Window: %li", reinterpret_cast<int64_t>(window));
   return apeiron_core::Errors::SUCCESS;
 }
 

@@ -5,10 +5,12 @@
 #include <limits.h>
 #include <loguru.hpp>
 #include <valarray>
+#include <vector>
+#include <vulkan/vulkan_core.h>
 
 int32_t main_loop(int32_t test, apeiron_core::ApplicationData &app_data) {
   LOG_SCOPE_F(INFO, "Main Loop");
-  bool running = true;
+  bool running = false; // normally true, false for testing
   while (running == true) {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -43,18 +45,36 @@ int main(int32_t argc, char *argv[]) {
 
   apeiron_core::window::WindowCreateInfo window_create_info{
       ._windowType = apeiron_core::window::WindowType::SDL,
-      // ._windowType = 4,
       .str_title = "SDL Vulkan window",
       ._posx = SDL_WINDOWPOS_CENTERED,
       ._posy = SDL_WINDOWPOS_CENTERED,
       ._sizex = 800,
       ._sizey = 600,
   };
+  apeiron_core::vk::DebugMessengerCreateInfo debug_messenger_create_info{
+      ._severity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+                   VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                   VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,
+      ._types = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+                VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT,
+      .p_callback = apeiron_core::vk::debug_callback,
+  };
+  apeiron_core::vk::InstanceCreateInfo instance_create_info{
+      .str_applicationName = "SDL Vulkan Window",
+      ._version = VK_MAKE_API_VERSION(0, 1, 0, 0),
+      .v_extensions = std::vector<const char *>(0),
+      .b_queryForExtensions = true,
+      .v_layers = std::vector<const char *>(0),
+      .p_debugMessengerCreateInfo = &debug_messenger_create_info,
+  };
   apeiron_core::ApplicationCreateInfo create_info{
       .p_windowCreateInfo = &window_create_info,
+      .p_instanceCreateInfo = &instance_create_info,
+      .p_debugMessengerCreateInfo = &debug_messenger_create_info,
   };
   apeiron_core::ApplicationData app_data{
-
+      .p_allocator = nullptr,
   };
   int32_t m = 0, c = 0;
   apeiron_core::AppBootstrap<apeiron_core::ApplicationCreateInfo *,
@@ -71,7 +91,6 @@ int main(int32_t argc, char *argv[]) {
           ._c = c,
           ._cr = app_data,
       };
-  apeiron_core::ApplicationCreateInfo *p = &create_info;
   if (auto ret = apeiron_core::run_app(app_bootstrap);
       ret != apeiron_core::Errors::SUCCESS) {
     LOG_F(ERROR, "An error occured whilst running app! (code: %d)", ret);

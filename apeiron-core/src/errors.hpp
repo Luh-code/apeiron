@@ -10,7 +10,7 @@ namespace apeiron_core {
  * <0 = Error
  */
 enum Errors : int32_t {
-  // Vulkan Warnings (9000, 9999)
+  // Vulkan Warnings (9000, 10999)
   VULKAN_WARNING = 9000,
   // GLFW Warnings (8000, 8999)
   GLFW_WARNING = 8000,
@@ -40,9 +40,11 @@ enum Errors : int32_t {
   SDL_FAILED_TO_GET_VK_INSTANCE_EXTENSION_COUNT = -7007,
   // GLFW Errors (-8000, -8999)
   GLFW_ERROR = -8000,
-  // Vulkan Errors (-9000, -9999)
+  // Vulkan Errors (-9000, -10999)
   VULKAN_ERROR = -9000,
   VULKAN_FAILED_TO_CREATE_INSTANCE = -9001,
+  VULKAN_INSTANCE_NOT_INITIALIZED = -9002,
+  VULKAN_FAILED_TO_SET_UP_DEBUG_MESSENGER = -9003,
 };
 } // namespace apeiron_core
 
