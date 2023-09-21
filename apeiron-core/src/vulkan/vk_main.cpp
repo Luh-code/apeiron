@@ -1,10 +1,5 @@
 #include "vk_main.hpp"
-#include <cstdint>
-#include <map>
-#include <utility>
-#include <vector>
 #include <vulkan/vulkan_core.h>
-// #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core::vk {
 void populate_debug_vk_messenger_create_info(
@@ -321,6 +316,29 @@ ap_error create_instance(ApplicationData &app_data,
   return Errors::SUCCESS;
 }
 
+void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices &indices) {
+  indices = {};
+
+  uint32_t queue_family_count = 0;
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count,
+                                           nullptr);
+
+  std::vector<VkQueueFamilyProperties> queue_families(queue_family_count);
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queue_family_count,
+                                           queue_families.data());
+
+  for (int32_t i = 0; i < queue_family_count; ++i) {
+    const auto &queue_family = queue_families[i];
+    if (queue_family.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+      indices._graphicsFamily = i;
+    }
+
+    if (queue_family_indices_complete(indices)) {
+      break;
+    }
+  }
+}
+
 int32_t rate_device_suitability(VkPhysicalDevice device,
                                 PhysicalDeviceSelectionInfo &scoring) {
   VkPhysicalDeviceProperties device_properties;
@@ -330,8 +348,17 @@ int32_t rate_device_suitability(VkPhysicalDevice device,
 
   int32_t score = 0;
 
+  // Check for queue families present
+  QueueFamilyIndices indices;
+  find_queue_families(device, indices);
+
+  // auto indices_complete = [indices]() -> bool {
+  //   return indices._graphicsFamily.has_value();
+  // };
+
   // Check for required functionality
-  if (!device_features.geometryShader) {
+  if (!device_features.geometryShader ||
+      !queue_family_indices_complete(indices)) {
     return score;
   }
 
@@ -411,9 +438,14 @@ ap_error select_physical_device(ApplicationData &app_data,
   VkPhysicalDeviceProperties device_properties;
   vkGetPhysicalDeviceProperties(candidates.rbegin()->second,
                                 &device_properties);
-  LOG_F(INFO, "Selected '%s'", device_properties.deviceName);
 
   app_data._physicalDevice = candidates.rbegin()->second;
+  LOG_F(INFO, "Selected '%s'", device_properties.deviceName);
+
+  QueueFamilyIndices indices;
+  find_queue_families(app_data._physicalDevice, indices);
+  app_data._queueFamilyIndices = indices;
+  VLOG_F(2, " - graphics queue: %u", indices._graphicsFamily.value());
 
   return Errors::SUCCESS;
 }

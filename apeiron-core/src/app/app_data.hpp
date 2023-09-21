@@ -3,10 +3,17 @@
 
 #include <SDL2/SDL_video.h>
 #include <cstdint>
+#include <optional>
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core {
+namespace vk {
+struct QueueFamilyIndices {
+public:
+  std::optional<uint32_t> _graphicsFamily;
+};
+}; // namespace vk
 
 struct ApplicationData {
 public:
@@ -19,6 +26,7 @@ public:
   VkDebugUtilsMessengerEXT _debugMessenger = VK_NULL_HANDLE;
 
   VkPhysicalDevice _physicalDevice = VK_NULL_HANDLE;
+  vk::QueueFamilyIndices _queueFamilyIndices;
 };
 } // namespace apeiron_core
 
