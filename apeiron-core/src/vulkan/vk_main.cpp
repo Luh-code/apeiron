@@ -444,8 +444,61 @@ ap_error select_physical_device(ApplicationData &app_data,
 
   QueueFamilyIndices indices;
   find_queue_families(app_data._physicalDevice, indices);
-  app_data._queueFamilyIndices = indices;
+  // app_data._queueFamilyIndices = indices;
   VLOG_F(2, " - graphics queue: %u", indices._graphicsFamily.value());
+
+  return Errors::SUCCESS;
+}
+
+ap_error create_logical_device(ApplicationData &app_data,
+                               LogicalDeviceCreationInfo &create_info) {
+  VLOG_SCOPE_F(1, "Creating logical device");
+
+  // Query for queue indices and create queue create infos
+  QueueFamilyIndices indices;
+  find_queue_families(app_data._physicalDevice, indices);
+
+  // For now just the graphics queue - this WILL change
+  float queue_priority = 1.0f; // 0.0f - 1.0f, impacts command buffer scheduling
+  VkDeviceQueueCreateInfo queue_create_info{
+      .sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
+      .queueFamilyIndex = indices._graphicsFamily.value(),
+      .queueCount = 1,
+      .pQueuePriorities = &queue_priority,
+  };
+
+  VkPhysicalDeviceFeatures device_features{};
+
+  VkDeviceCreateInfo device_create_info{
+      .sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+      .queueCreateInfoCount = 1, // Change later
+      .pQueueCreateInfos = &queue_create_info,
+      .pEnabledFeatures = &device_features,
+  };
+
+  // Set device specific layers for backwards compatibility
+  if (create_info.p_instanceCreateInfo->b_enableValidationLayers) {
+    device_create_info.enabledLayerCount = static_cast<uint32_t>(
+        create_info.p_instanceCreateInfo->v_validationLayers.size());
+    device_create_info.ppEnabledLayerNames =
+        create_info.p_instanceCreateInfo->v_validationLayers.data();
+  } else {
+    device_create_info.enabledLayerCount = 0;
+  }
+
+  if (auto res = vkCreateDevice(app_data._physicalDevice, &device_create_info,
+                                app_data.p_allocator, &app_data._device);
+      res != VK_SUCCESS) {
+    LOG_F(ERROR, "Failed to create VkDevice: %d", res);
+    return Errors::VULKAN_FAILED_TO_CREATE_DEVICE;
+  }
+
+  // Get Queue handles for all defined queues
+  // Queue index 0 for the graphics queue
+  vkGetDeviceQueue(app_data._device, indices._graphicsFamily.value(), 0,
+                   &app_data._graphicsQueue);
+
+  VLOG_F(2, "Successfully created VkDevice!");
 
   return Errors::SUCCESS;
 }

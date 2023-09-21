@@ -8,12 +8,7 @@
 #include <vulkan/vulkan_core.h>
 
 namespace apeiron_core {
-namespace vk {
-struct QueueFamilyIndices {
-public:
-  std::optional<uint32_t> _graphicsFamily;
-};
-}; // namespace vk
+// namespace vk {}; // namespace vk
 
 struct ApplicationData {
 public:
@@ -26,7 +21,9 @@ public:
   VkDebugUtilsMessengerEXT _debugMessenger = VK_NULL_HANDLE;
 
   VkPhysicalDevice _physicalDevice = VK_NULL_HANDLE;
-  vk::QueueFamilyIndices _queueFamilyIndices;
+  // vk::QueueFamilyIndices _queueFamilyIndices;
+  VkDevice _device = VK_NULL_HANDLE;
+  VkQueue _graphicsQueue;
 };
 } // namespace apeiron_core
 

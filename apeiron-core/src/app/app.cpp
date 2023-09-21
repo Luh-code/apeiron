@@ -1,5 +1,6 @@
 #include "app.hpp"
 #include <vector>
+#include <vulkan/vulkan_core.h>
 
 namespace apeiron_core {
 ap_error init_window(window::WindowCreateInfo *create_info,
@@ -74,6 +75,12 @@ ap_error init_vulkan(ApplicationCreateInfo *create_info,
       ret < Errors::SUCCESS) {
     return ret;
   }
+
+  if (auto ret = vk::create_logical_device(
+          app_data, *create_info->p_logicalDeviceCreateInfo);
+      ret < Errors::SUCCESS) {
+    return ret;
+  }
   return Errors::SUCCESS;
 }
 
@@ -98,6 +105,11 @@ ap_error normal_cleanup(int32_t, ApplicationData &app_data) {
 
   // Clean up Vulkan
   VLOG_F(1, "Cleaning up Vulkan");
+  // Clean up Device
+  if (app_data._device) {
+    vkDestroyDevice(app_data._device, app_data.p_allocator);
+    VLOG_F(2, "Cleaned up VkDevice");
+  }
   // Clean up Debug messenger
   if (app_data._debugMessenger) {
     vk::destroy_debug_utils_messenger_ext(
@@ -106,7 +118,7 @@ ap_error normal_cleanup(int32_t, ApplicationData &app_data) {
   }
   // Clean up Instance
   if (app_data._instance) {
-    vkDestroyInstance(app_data._instance, nullptr);
+    vkDestroyInstance(app_data._instance, app_data.p_allocator);
     VLOG_F(2, "Cleaned up VkInstance");
   }
 

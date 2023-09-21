@@ -102,9 +102,14 @@ public:
 
   DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
 };
+
 [[nodiscard]] ap_error create_instance(ApplicationData &app_data,
                                        InstanceCreateInfo &create_info);
 
+struct QueueFamilyIndices {
+public:
+  std::optional<uint32_t> _graphicsFamily;
+};
 void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices &indices);
 inline bool queue_family_indices_complete(QueueFamilyIndices &indices) {
   return indices._graphicsFamily.has_value();
@@ -120,6 +125,14 @@ rate_device_suitability(VkPhysicalDevice device,
 [[nodiscard]] ap_error
 select_physical_device(ApplicationData &app_data,
                        PhysicalDeviceSelectionInfo &selection_info);
+
+struct LogicalDeviceCreationInfo {
+public:
+  InstanceCreateInfo *p_instanceCreateInfo;
+};
+[[nodiscard]] ap_error
+create_logical_device(ApplicationData &app_data,
+                      LogicalDeviceCreationInfo &create_info);
 } // namespace apeiron_core::vk
 
 #endif // __VK_MAIN_HPP__
