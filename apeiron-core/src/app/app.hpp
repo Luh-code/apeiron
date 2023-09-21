@@ -17,6 +17,7 @@ public:
   vk::InstanceCreateInfo *p_instanceCreateInfo;
   vk::DebugMessengerCreateInfo *p_debugMessengerCreateInfo;
   vk::PhysicalDeviceSelectionInfo *p_physicalDeviceSelectionInfo;
+  vk::LogicalDeviceCreationInfo *p_logicalDeviceCreateInfo;
 };
 
 template <typename I, typename IR, typename M, typename MR, typename C,
