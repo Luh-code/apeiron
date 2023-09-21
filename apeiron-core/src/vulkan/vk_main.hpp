@@ -105,11 +105,10 @@ public:
 [[nodiscard]] ap_error create_instance(ApplicationData &app_data,
                                        InstanceCreateInfo &create_info);
 
-struct QueueFamilyIndices {
-public:
-  std::optional<uint32_t> _graphicsFamily;
-};
-void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices *indices);
+void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices &indices);
+inline bool queue_family_indices_complete(QueueFamilyIndices &indices) {
+  return indices._graphicsFamily.has_value();
+}
 struct PhysicalDeviceSelectionInfo {
 public:
   int32_t _discreteness = 1000;

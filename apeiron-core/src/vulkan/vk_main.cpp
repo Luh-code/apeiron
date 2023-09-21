@@ -316,31 +316,7 @@ ap_error create_instance(ApplicationData &app_data,
   return Errors::SUCCESS;
 }
 
-int32_t rate_device_suitability(VkPhysicalDevice device,
-                                PhysicalDeviceSelectionInfo &scoring) {
-  VkPhysicalDeviceProperties device_properties;
-  VkPhysicalDeviceFeatures device_features;
-  vkGetPhysicalDeviceProperties(device, &device_properties);
-  vkGetPhysicalDeviceFeatures(device, &device_features);
-
-  int32_t score = 0;
-
-  // Check for required functionality
-  if (!device_features.geometryShader) {
-    return score;
-  }
-
-  if (device_properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
-    score += scoring._discreteness;
-  }
-
-  score += device_properties.limits.maxImageDimension2D *
-           scoring._imageSizeImportance;
-
-  return score;
-}
-
-void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices *indices) {
+void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices &indices) {
   indices = {};
 
   uint32_t queue_family_count = 0;
@@ -353,8 +329,47 @@ void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices *indices) {
 
   for (int32_t i = 0; i < queue_family_count; ++i) {
     const auto &queue_family = queue_families[i];
-    if (queue_family.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+    if (queue_family.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+      indices._graphicsFamily = i;
+    }
+
+    if (queue_family_indices_complete(indices)) {
+      break;
+    }
   }
+}
+
+int32_t rate_device_suitability(VkPhysicalDevice device,
+                                PhysicalDeviceSelectionInfo &scoring) {
+  VkPhysicalDeviceProperties device_properties;
+  VkPhysicalDeviceFeatures device_features;
+  vkGetPhysicalDeviceProperties(device, &device_properties);
+  vkGetPhysicalDeviceFeatures(device, &device_features);
+
+  int32_t score = 0;
+
+  // Check for queue families present
+  QueueFamilyIndices indices;
+  find_queue_families(device, indices);
+
+  // auto indices_complete = [indices]() -> bool {
+  //   return indices._graphicsFamily.has_value();
+  // };
+
+  // Check for required functionality
+  if (!device_features.geometryShader ||
+      !queue_family_indices_complete(indices)) {
+    return score;
+  }
+
+  if (device_properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
+    score += scoring._discreteness;
+  }
+
+  score += device_properties.limits.maxImageDimension2D *
+           scoring._imageSizeImportance;
+
+  return score;
 }
 
 ap_error select_physical_device(ApplicationData &app_data,
@@ -423,9 +438,14 @@ ap_error select_physical_device(ApplicationData &app_data,
   VkPhysicalDeviceProperties device_properties;
   vkGetPhysicalDeviceProperties(candidates.rbegin()->second,
                                 &device_properties);
-  LOG_F(INFO, "Selected '%s'", device_properties.deviceName);
 
   app_data._physicalDevice = candidates.rbegin()->second;
+  LOG_F(INFO, "Selected '%s'", device_properties.deviceName);
+
+  QueueFamilyIndices indices;
+  find_queue_families(app_data._physicalDevice, indices);
+  app_data._queueFamilyIndices = indices;
+  VLOG_F(2, " - graphics queue: %u", indices._graphicsFamily.value());
 
   return Errors::SUCCESS;
 }
