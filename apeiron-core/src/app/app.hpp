@@ -13,6 +13,7 @@ namespace apeiron_core {
 
 struct ApplicationCreateInfo {
 public:
+  bool b_deleteAfterUse;
   window::WindowCreateInfo *p_windowCreateInfo;
   vk::InstanceCreateInfo *p_instanceCreateInfo;
   vk::DebugMessengerCreateInfo *p_debugMessengerCreateInfo;

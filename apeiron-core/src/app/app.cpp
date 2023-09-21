@@ -75,11 +75,17 @@ ap_error init_vulkan(ApplicationCreateInfo *create_info,
       ret < Errors::SUCCESS) {
     return ret;
   }
-
   if (auto ret = vk::create_logical_device(
           app_data, *create_info->p_logicalDeviceCreateInfo);
       ret < Errors::SUCCESS) {
     return ret;
+  }
+
+  if (create_info->b_deleteAfterUse) {
+    delete create_info->p_instanceCreateInfo;
+    delete create_info->p_debugMessengerCreateInfo;
+    delete create_info->p_physicalDeviceSelectionInfo;
+    delete create_info->p_logicalDeviceCreateInfo;
   }
   return Errors::SUCCESS;
 }

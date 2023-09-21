@@ -75,6 +75,7 @@ int main(int32_t argc, char *argv[]) {
       .p_instanceCreateInfo = &instance_create_info,
   };
   apeiron_core::ApplicationCreateInfo create_info{
+      .b_deleteAfterUse = false,
       .p_windowCreateInfo = &window_create_info,
       .p_instanceCreateInfo = &instance_create_info,
       .p_debugMessengerCreateInfo = &debug_messenger_create_info,
