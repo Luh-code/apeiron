@@ -35,6 +35,7 @@ set(LOGURU_WITH_STREAMS TRUE)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/loguru)
 
 find_package(Vulkan REQUIRED)
+option(ENABLE_WAYLAND "Enable Wayland support" ON)
 add_subdirectory(${PROJECT_SOURCE_DIR}/deps/sdl2 EXCLUDE_FROM_ALL)
 # find_package(SDL2 REQUIRED)
 set(DGLFW_USE_WAYLAND ON)

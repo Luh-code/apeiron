@@ -64,7 +64,7 @@ UpdateType:
 
 # Compiler info
 Compiler: /usr/bin/c++
-CompilerVersion: 13.1.1
+CompilerVersion: 13.2.1
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 

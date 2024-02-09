@@ -70,6 +70,23 @@ ap_error init_vulkan(ApplicationCreateInfo *create_info,
       return ret;
     }
   }
+  switch (create_info->p_windowCreateInfo->_windowType) {
+  case window::WindowType::SDL:
+    if (auto ret = window::sdl_create_vk_surface_khr(app_data);
+        ret < Errors::SUCCESS) {
+      return ret;
+    }
+    break;
+  case window::WindowType::GLFW:
+    LOG_F(ERROR, "GLFW support is not implemented yet!");
+    return Errors::NOT_IMPLEMENTED_ERROR;
+    break;
+  default:
+    LOG_F(ERROR, "'%d' is not a valid value for a _windowType",
+          create_info->p_windowCreateInfo->_windowType);
+    return Errors::WINDOW_WINDOWTYPE_NOT_LEGAL;
+    break;
+  }
   if (auto ret = vk::select_physical_device(
           app_data, *create_info->p_physicalDeviceSelectionInfo);
       ret < Errors::SUCCESS) {
@@ -121,6 +138,12 @@ ap_error normal_cleanup(int32_t, ApplicationData &app_data) {
     vk::destroy_debug_utils_messenger_ext(
         app_data._instance, app_data._debugMessenger, app_data.p_allocator);
     VLOG_F(2, "Cleaned up VkDebugUtilsMessengerEXT");
+  }
+  // Clean up Surface
+  if (app_data._surface) {
+    vkDestroySurfaceKHR(app_data._instance, app_data._surface,
+                        app_data.p_allocator);
+    VLOG_F(2, "Cleaned up VkSurfaceKHR");
   }
   // Clean up Instance
   if (app_data._instance) {

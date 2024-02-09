@@ -7,7 +7,7 @@ NC='\033[0m' # No Color
 # build apeiron-core
 printf -- "----- Building apeiron-core -----\n"
 pushd apeiron-core/ > /dev/null
-cmake -DGLFW_USE_WAYLAND=ON -G Ninja -B ./build . 
+cmake -DGLFW_USE_WAYLAND=ON -DENABLE_WAYLAND=ON -G Ninja -B ./build . 
 if [ $? -ne 0 ]
 then
   printf -- "${RED}Failed to generate build files for apeiron-core!${NC}\n"

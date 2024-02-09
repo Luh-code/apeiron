@@ -14,7 +14,7 @@ struct ApplicationData {
 public:
   int32_t _windowType;
   SDL_Window *p_SDLWindow;
-  SDL_Surface *p_SDLSurface;
+  // SDL_Surface *p_SDLSurface;
 
   VkAllocationCallbacks *p_allocator;
   VkInstance _instance = VK_NULL_HANDLE;
@@ -24,6 +24,9 @@ public:
   // vk::QueueFamilyIndices _queueFamilyIndices;
   VkDevice _device = VK_NULL_HANDLE;
   VkQueue _graphicsQueue;
+  VkQueue _presentQueue;
+
+  VkSurfaceKHR _surface;
 };
 } // namespace apeiron_core
 

@@ -1,10 +1,10 @@
-#include "apeiron_core/apeiron_core.hpp"
+#include <apeiron_core/apeiron_core.hpp>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 #include <cstdint>
-#include <limits.h>
+#include <linux/limits.h>
 #include <loguru.hpp>
-#include <valarray>
+//#include <valarray>
 #include <vector>
 #include <vulkan/vulkan_core.h>
 
@@ -73,6 +73,7 @@ int main(int32_t argc, char *argv[]) {
   };
   apeiron_core::vk::LogicalDeviceCreationInfo logical_device_create_info{
       .p_instanceCreateInfo = &instance_create_info,
+      .v_extensions = physical_device_selection_info.v_extensions,
   };
   apeiron_core::ApplicationCreateInfo create_info{
       .b_deleteAfterUse = false,
@@ -85,6 +86,7 @@ int main(int32_t argc, char *argv[]) {
   apeiron_core::ApplicationData app_data{
       .p_allocator = nullptr,
   };
+
   int32_t m = 0, c = 0;
   apeiron_core::AppBootstrap<apeiron_core::ApplicationCreateInfo *,
                              apeiron_core::ApplicationData &, int32_t,

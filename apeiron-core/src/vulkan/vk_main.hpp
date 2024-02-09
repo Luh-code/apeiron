@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <map>
 #include <optional>
+#include <set>
 #include <string>
 
 #include <vulkan/vk_platform.h>
@@ -109,18 +110,47 @@ public:
 struct QueueFamilyIndices {
 public:
   std::optional<uint32_t> _graphicsFamily;
+  std::optional<uint32_t> _presentFamily;
 };
-void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices &indices);
-inline bool queue_family_indices_complete(QueueFamilyIndices &indices) {
-  return indices._graphicsFamily.has_value();
+void find_queue_families(VkPhysicalDevice device, QueueFamilyIndices &indices,
+                         VkSurfaceKHR &surface);
+[[nodiscard]] inline bool
+queue_family_indices_complete(QueueFamilyIndices &indices) {
+  return indices._graphicsFamily.has_value() &&
+         indices._presentFamily.has_value();
+}
+[[nodiscard]] inline bool
+queue_family_indices_ideal(QueueFamilyIndices &indices) {
+  if (!queue_family_indices_complete(indices)) {
+    return false;
+  }
+  // Check if the _presentFamily is the same as the _graphicsFamily, for a
+  // performance boost
+  bool present_same_as_graphics =
+      indices._graphicsFamily.value() == indices._presentFamily.value();
+
+  return present_same_as_graphics;
 }
 struct PhysicalDeviceSelectionInfo {
 public:
   int32_t _discreteness = 1000;
   float_t _imageSizeImportance = 1.0f;
+  std::vector<const char *> v_extensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+  int32_t _queueIdealness = 250;
 };
+[[nodiscard]] bool
+check_device_extension_support(VkPhysicalDevice device,
+                               PhysicalDeviceSelectionInfo selection_info);
+struct SwapChainSupportDetails {
+public:
+  VkSurfaceCapabilitiesKHR _capabilities;
+  std::vector<VkSurfaceFormatKHR> v_formats;
+  std::vector<VkPresentModeKHR> v_presentModes;
+};
+void query_swap_chain_support(VkPhysicalDevice &device, VkSurfaceKHR &surface,
+                              SwapChainSupportDetails &swap_chain_support);
 [[nodiscard]] int32_t
-rate_device_suitability(VkPhysicalDevice device,
+rate_device_suitability(ApplicationData &app_data, VkPhysicalDevice device,
                         PhysicalDeviceSelectionInfo &scoring);
 [[nodiscard]] ap_error
 select_physical_device(ApplicationData &app_data,
@@ -129,6 +159,7 @@ select_physical_device(ApplicationData &app_data,
 struct LogicalDeviceCreationInfo {
 public:
   InstanceCreateInfo *p_instanceCreateInfo;
+  std::vector<const char *> v_extensions;
 };
 [[nodiscard]] ap_error
 create_logical_device(ApplicationData &app_data,

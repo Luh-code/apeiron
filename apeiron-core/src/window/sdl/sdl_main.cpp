@@ -1,4 +1,5 @@
 #include "sdl_main.hpp"
+#include <SDL2/SDL_video.h>
 
 namespace apeiron_core::window {
 int32_t sdl_init(int32_t flags) {
@@ -118,5 +119,18 @@ int32_t sdl_test(uint32_t millis) {
   SDL_Delay(millis);
 
   return 0;
+}
+
+int32_t sdl_create_vk_surface_khr(ApplicationData &app_data) {
+  if (!sdl_initialized(SDL_WINDOW_VULKAN)) {
+    LOG_F(ERROR, "SDL_window not initialized for use with Vulkan! "
+                 "(SDL_WINDOW_VULKAN flag missing)");
+    return Errors::SDL_NOT_INITIALIZED;
+  }
+  if (SDL_Vulkan_CreateSurface(app_data.p_SDLWindow, app_data._instance,
+                               &app_data._surface)) {
+    return Errors::SUCCESS;
+  }
+  return Errors::SDL_FAILED_TO_CREATE_VK_SURFACE_KHR;
 }
 } // namespace apeiron_core::window

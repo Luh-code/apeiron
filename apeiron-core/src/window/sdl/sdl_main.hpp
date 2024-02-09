@@ -1,6 +1,7 @@
 #ifndef __SDL_MAIN_HPP__
 #define __SDL_MAIN_HPP__
 
+#include "../../app/app_data.hpp"
 #include "../../errors.hpp"
 #include "../window.hpp"
 
@@ -30,6 +31,8 @@ namespace apeiron_core::window {
 [[nodiscard]] int32_t sdl_get_instance_extensions(SDL_Window *window,
                                                   uint32_t *extension_count,
                                                   const char ***extensions);
+
+[[nodiscard]] int32_t sdl_create_vk_surface_khr(ApplicationData &app_data);
 
 const char *sdl_get_error();
 

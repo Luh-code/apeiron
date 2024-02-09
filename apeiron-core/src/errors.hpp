@@ -26,6 +26,7 @@ enum Errors : ap_error {
   // Generic Errors (-1, -4999)
   ERROR = -1,
   NOT_IMPLEMENTED_ERROR = -2,
+  INVALID_PATH_ERROR = -3, // When codepath is not valid
   // Window Errors (-5000, -6999)
   WINDOW_ERROR = -5000,
   WINDOW_CREATE_INFO_NOT_DEFINED = -5001,
@@ -39,6 +40,7 @@ enum Errors : ap_error {
   SDL_FAILED_INITIALIZATION = -7005,
   SDL_FAILED_TO_GET_VK_INSTANCE_EXTENSIONS = -7006,
   SDL_FAILED_TO_GET_VK_INSTANCE_EXTENSION_COUNT = -7007,
+  SDL_FAILED_TO_CREATE_VK_SURFACE_KHR = -7008,
   // GLFW Errors (-8000, -8999)
   GLFW_ERROR = -8000,
   // Vulkan Errors (-9000, -10999)
