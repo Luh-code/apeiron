@@ -1,0 +1,15 @@
+[submodule "apeiron-logger"]
+	path = apeiron-logger
+	url = ./apeiron-logger
+[submodule "apeiron-core"]
+	path = apeiron-core
+	url = ./apeiron-core
+[submodule "apeiron-framework"]
+	path = apeiron-framework
+	url = ./apeiron-framework
+[submodule "apeiron-dk"]
+	path = apeiron-dk
+	url = ./apeiron-dk
+[submodule "apeiron-desk"]
+	path = apeiron-desk
+	url = ./apeiron-desk
