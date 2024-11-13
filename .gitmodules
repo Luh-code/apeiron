@@ -1,15 +1,15 @@
 [submodule "apeiron-logger"]
 	path = apeiron-logger
-	url = ./apeiron-logger
+	url = git@github.com:Luh-code/apeiron-logger.git
 [submodule "apeiron-core"]
 	path = apeiron-core
-	url = ./apeiron-core
+	url = git@github.com:Luh-code/apeiron-core.git
 [submodule "apeiron-framework"]
 	path = apeiron-framework
-	url = ./apeiron-framework
+	url = git@github.com:Luh-code/apeiron-framework.git
 [submodule "apeiron-dk"]
 	path = apeiron-dk
-	url = ./apeiron-dk
+	url = git@github.com:Luh-code/apeiron-dk.git
 [submodule "apeiron-desk"]
 	path = apeiron-desk
-	url = ./apeiron-desk
+	url = git@github.com:Luh-code/apeiron-desk.git
